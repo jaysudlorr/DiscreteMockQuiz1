@@ -266,10 +266,11 @@ svg .vbox{fill:none;stroke:var(--rule);stroke-width:1.2}
 <section id="setup" class="setup">
   <div class="setup-head">
     <h2>Build your paper</h2>
-    <p>A 109-question bank modelled on Quiz 1 (Propositional &amp; Predicate Logic, Set, Function &amp; Relation)
-       and Quiz 2 (Methods of Proof), pitched a notch harder. Three item types &mdash; multiple choice,
-       integer answer, and <b>formula entry</b>, where you translate an English sentence into logic and any
-       logically equivalent formula is accepted. Shuffled every attempt, with a full worked solution for every question.</p>
+    <p>A 119-question bank modelled on Quiz 1 (Propositional &amp; Predicate Logic, Set, Function &amp; Relation)
+       and Quiz 2 (Methods of Proof), pitched a notch harder. Four item types &mdash; multiple choice, integer answer,
+       <b>formula entry</b> (translate an English sentence into logic; any equivalent formula is accepted), and
+       <b>step audit</b> (click the mis-justified line in a derivation). Shuffled every attempt, with a full worked
+       solution for every question.</p>
   </div>
 
   <div class="field">
@@ -310,6 +311,7 @@ svg .vbox{fill:none;stroke:var(--rule);stroke-width:1.2}
     <b>Rules</b> &mdash; one point per question, no penalty for a wrong answer &middot;
     integer items take a whole number only (negatives allowed); formula items are graded by truth table, so
     <span class="f">&not;p &or; q</span> and <span class="f">p &rarr; q</span> both count &middot;
+    step-audit items want the line number, clicked or typed &middot;
     press <span class="f">1&ndash;4</span> to choose, <span class="f">&larr; &rarr;</span> to move between questions,
     <span class="f">F</span> to flag one for review &middot; solutions are revealed after you hand in the answer sheet.
   </div>
@@ -590,16 +592,17 @@ const BANK = [
     The others are valid: <span class="f">&exist;</span> distributes over <span class="f">&and;</span> in one direction only, <span class="f">&forall;</span> distributes over <span class="f">&and;</span> both ways,
     and a non-empty domain makes <span class="f">&forall; &rarr; &exist;</span> sound.`},
 
-{t:"pred",type:"mc",hard:true,
- q:`The following derivation contains <b>exactly one</b> faulty step. Which one?`,
+{t:"deriv",type:"audit",hard:true,need:1,
+ q:`Exactly one step below is <b>not</b> a correct application of the rule it cites. Click that step.`,
+ given:`<b>Premises:</b> <span class="f">&forall;x (P(x) &rarr; Q(x))</span>, <span class="f">&exist;x P(x)</span><br>
+        <b>Conclusion:</b> <span class="f">&exist;x Q(x)</span>`,
  steps:[["<span class='f'>&forall;x (P(x) &rarr; Q(x))</span>","Premise"],
         ["<span class='f'>&exist;x P(x)</span>","Premise"],
         ["<span class='f'>P(c) &rarr; Q(c)</span>","Universal Instantiation (1)"],
         ["<span class='f'>P(c)</span>","Existential Instantiation (2)"],
         ["<span class='f'>Q(c)</span>","Modus Ponens (3),(4)"],
         ["<span class='f'>&exist;x Q(x)</span>","Existential Generalization (5)"]],
- c:[`Step 4`,`Step 3`,`Step 5`,`Step 6`],
- a:0,
+ a:[4],
  s:`<b>Step 4 is illegal.</b> Existential Instantiation must introduce a <b>fresh</b> constant that has not appeared before,
     but <span class="f">c</span> was already fixed in step 3 by UI.<br>
     Doing it this way silently assumes the object guaranteed by <span class="f">&exist;x P(x)</span> happens to be the very c we chose.<br>
@@ -1528,7 +1531,168 @@ const BANK = [
  a:0,
  s:`A cycle of implications makes every one reachable from every other by chaining, so <b>3</b> proofs suffice instead of 6.<br>
     E.g. <span class="f">p&#8322; &rarr; p&#8321;</span> comes free from <span class="f">p&#8322; &rarr; p&#8323; &rarr; p&#8321;</span>.<br>
-    Two implications alone are not enough &mdash; nothing yet leads back from <span class="f">p&#8323;</span>. And the last option simply ignores <span class="f">p&#8323;</span>.`}
+    Two implications alone are not enough &mdash; nothing yet leads back from <span class="f">p&#8323;</span>. And the last option simply ignores <span class="f">p&#8323;</span>.`},
+
+/* ==================== DERIVATIONS & STEP AUDIT (10) ==================== */
+{t:"deriv",type:"audit",hard:false,need:2,
+ q:`Every step below is correctly justified. Click the two steps referenced as <span class="f">(a)</span> and <span class="f">(b)</span>.`,
+ given:`<b>Premises:</b> <span class="f">&forall;x (P(x) &rarr; Q(x))</span>, <span class="f">&forall;x (Q(x) &rarr; R(x))</span>, <span class="f">&not;R(d)</span><br>
+        <b>Conclusion:</b> <span class="f">&not;P(d)</span>`,
+ steps:[["<span class='f'>&forall;x (P(x) &rarr; Q(x))</span>","Premise"],
+        ["<span class='f'>P(d) &rarr; Q(d)</span>","Universal Instantiation (1)"],
+        ["<span class='f'>&forall;x (Q(x) &rarr; R(x))</span>","Premise"],
+        ["<span class='f'>Q(d) &rarr; R(d)</span>","Universal Instantiation (3)"],
+        ["<span class='f'>P(d) &rarr; R(d)</span>","Hypothetical syllogism using _(a)_ and _(b)_"],
+        ["<span class='f'>&not;R(d)</span>","Premise"],
+        ["<span class='f'>&not;P(d)</span>","Modus tollens using (5) and (6)"]],
+ a:[2,4],
+ s:`Hypothetical syllogism chains two <em>conditionals</em>, so both references must be conditional lines about the same constant d.<br>
+    Step 5 needs <span class="f">P(d) &rarr; Q(d)</span> and <span class="f">Q(d) &rarr; R(d)</span> &rArr; <b>(2) and (4)</b>.<br>
+    Steps (1) and (3) are the quantified premises &mdash; the rule cannot be applied to them until UI strips the quantifier.`},
+
+{t:"deriv",type:"audit",hard:true,need:1,
+ q:`Exactly one step below is <b>not</b> a correct application of the rule it cites. Click that step.`,
+ given:`<b>Premises:</b> <span class="f">&forall;x (P(x) &and; Q(x))</span>, <span class="f">&forall;x (&not;Q(x) &or; S(x))</span>, <span class="f">&forall;x (R(x) &rarr; &not;S(x))</span><br>
+        <b>Conclusion:</b> <span class="f">&forall;x &not;R(x)</span>`,
+ steps:[["<span class='f'>&forall;x (P(x) &and; Q(x))</span>","Premise"],
+        ["<span class='f'>P(c) &and; Q(c)</span>","Universal Instantiation (1)"],
+        ["<span class='f'>Q(c)</span>","Disjunctive syllogism using (2)"],
+        ["<span class='f'>&forall;x (&not;Q(x) &or; S(x))</span>","Premise"],
+        ["<span class='f'>&not;Q(c) &or; S(c)</span>","Universal Instantiation (4)"],
+        ["<span class='f'>S(c)</span>","Disjunctive syllogism using (3) and (5)"],
+        ["<span class='f'>&forall;x (R(x) &rarr; &not;S(x))</span>","Premise"],
+        ["<span class='f'>R(c) &rarr; &not;S(c)</span>","Universal Instantiation (7)"],
+        ["<span class='f'>&not;R(c)</span>","Modus tollens using (6) and (8)"],
+        ["<span class='f'>&forall;x &not;R(x)</span>","Universal Generalization (9)"]],
+ a:[3],
+ s:`<b>Step 3</b> pulls one side out of a <em>conjunction</em> <span class="f">P(c) &and; Q(c)</span>. That rule is <b>Simplification</b>, not disjunctive syllogism.<br>
+    Disjunctive syllogism operates on a disjunction plus the negation of one disjunct &mdash; which is exactly what step 6 legitimately does with <span class="f">Q(c)</span> and <span class="f">&not;Q(c) &or; S(c)</span>.<br>
+    Everything else checks out: step 9 is modus tollens because <span class="f">S(c)</span> denies the consequent <span class="f">&not;S(c)</span>,
+    and step 10 may generalise because c came from UI, so it was arbitrary all along.`},
+
+{t:"deriv",type:"audit",hard:true,need:1,
+ q:`Exactly one step below is <b>not</b> a correct application of the rule it cites. Click that step.`,
+ given:`<b>Premises:</b> <span class="f">&exist;x P(x)</span>, <span class="f">&forall;x (P(x) &rarr; Q(x))</span><br>
+        <b>Claimed conclusion:</b> <span class="f">&forall;x Q(x)</span>`,
+ steps:[["<span class='f'>&exist;x P(x)</span>","Premise"],
+        ["<span class='f'>P(c)</span>","Existential Instantiation (1)"],
+        ["<span class='f'>&forall;x (P(x) &rarr; Q(x))</span>","Premise"],
+        ["<span class='f'>P(c) &rarr; Q(c)</span>","Universal Instantiation (3)"],
+        ["<span class='f'>Q(c)</span>","Modus Ponens (2),(4)"],
+        ["<span class='f'>&forall;x Q(x)</span>","Universal Generalization (5)"]],
+ a:[6],
+ s:`<b>Step 6 is illegal.</b> Universal Generalization requires the constant to be <b>arbitrary</b>, but c was introduced by EI as one specific witness we happened to be handed.<br>
+    From &ldquo;something is P&rdquo; you cannot conclude that <em>everything</em> is Q.<br>
+    The strongest valid conclusion here is <span class="f">&exist;x Q(x)</span> by Existential Generalization.<br>
+    Note the ordering in steps 2&ndash;4 is fine: EI comes first with a fresh c, and UI is then applied to that same c.`},
+
+{t:"deriv",type:"audit",hard:false,need:1,
+ q:`Exactly one step below is <b>not</b> a correct application of the rule it cites. Click that step.`,
+ given:`<b>Premises:</b> <span class="f">&forall;x (P(x) &rarr; Q(x))</span>, <span class="f">Q(d)</span><br>
+        <b>Claimed conclusion:</b> <span class="f">&exist;x P(x)</span>`,
+ steps:[["<span class='f'>&forall;x (P(x) &rarr; Q(x))</span>","Premise"],
+        ["<span class='f'>P(d) &rarr; Q(d)</span>","Universal Instantiation (1)"],
+        ["<span class='f'>Q(d)</span>","Premise"],
+        ["<span class='f'>P(d)</span>","Modus Ponens (2),(3)"],
+        ["<span class='f'>&exist;x P(x)</span>","Existential Generalization (4)"]],
+ a:[4],
+ s:`<b>Step 4 is the converse error.</b> Modus ponens needs the <em>antecedent</em> <span class="f">P(d)</span> to fire <span class="f">P(d) &rarr; Q(d)</span>;
+    here we were only given the consequent <span class="f">Q(d)</span>.<br>
+    Affirming the consequent is invalid: <span class="f">(p &rarr; q) &and; q &rArr; p</span> fails at <span class="f">p = F, q = T</span>.<br>
+    Step 5 applies EG correctly <em>as a rule</em> &mdash; it just inherits a line that was never soundly derived.`},
+
+{t:"deriv",type:"audit",hard:true,need:1,
+ q:`Exactly one step below is <b>not</b> a correct application of the rule it cites. Click that step.`,
+ given:`<b>Premises:</b> <span class="f">p &or; q</span>, <span class="f">&not;p</span>, <span class="f">&not;q &rarr; r</span><br>
+        <b>Claimed conclusion:</b> <span class="f">r</span>`,
+ steps:[["<span class='f'>p &or; q</span>","Premise"],
+        ["<span class='f'>&not;p</span>","Premise"],
+        ["<span class='f'>q</span>","Disjunctive syllogism (1),(2)"],
+        ["<span class='f'>&not;q &rarr; r</span>","Premise"],
+        ["<span class='f'>r</span>","Modus Ponens (3),(4)"]],
+ a:[5],
+ s:`<b>Step 5 has the wrong polarity.</b> To fire <span class="f">&not;q &rarr; r</span> by modus ponens you need <span class="f">&not;q</span>,
+    but step 3 established <span class="f">q</span> &mdash; the opposite.<br>
+    Step 3 itself is a textbook disjunctive syllogism and is correct.<br>
+    In fact the argument is <b>invalid</b>: take <span class="f">p = F, q = T, r = F</span>; all three premises hold while the conclusion fails.`},
+
+{t:"deriv",type:"audit",hard:false,need:2,
+ q:`Every step below is correctly justified. Click the two steps referenced as <span class="f">(a)</span> and <span class="f">(b)</span>.`,
+ given:`<b>Premises:</b> <span class="f">p &or; q</span>, <span class="f">&not;p &or; r</span>, <span class="f">&not;q</span><br>
+        <b>Conclusion:</b> <span class="f">r</span>`,
+ steps:[["<span class='f'>p &or; q</span>","Premise"],
+        ["<span class='f'>&not;p &or; r</span>","Premise"],
+        ["<span class='f'>q &or; r</span>","Resolution using (1) and (2)"],
+        ["<span class='f'>&not;q</span>","Premise"],
+        ["<span class='f'>r</span>","Disjunctive syllogism using _(a)_ and _(b)_"]],
+ a:[3,4],
+ s:`Disjunctive syllogism needs a <em>disjunction</em> plus the <em>negation of one disjunct</em>.<br>
+    The disjunction is the derived line <span class="f">q &or; r</span> at step 3; the negation is the premise <span class="f">&not;q</span> at step 4 &rArr; <b>(3) and (4)</b>.<br>
+    Steps 1 and 2 were already consumed by the resolution at step 3, and neither is a negated literal.`},
+
+{t:"deriv",type:"audit",hard:true,need:1,
+ q:`Exactly one step below is <b>not</b> a correct application of the rule it cites. Click that step.`,
+ given:`<b>Premises:</b> <span class="f">&forall;x (A(x) &or; B(x))</span>, <span class="f">&not;A(d)</span>, <span class="f">&forall;x (B(x) &rarr; C(x))</span><br>
+        <b>Conclusion:</b> <span class="f">C(d)</span>`,
+ steps:[["<span class='f'>&forall;x (A(x) &or; B(x))</span>","Premise"],
+        ["<span class='f'>A(d) &or; B(d)</span>","Universal Instantiation (1)"],
+        ["<span class='f'>&not;A(d)</span>","Premise"],
+        ["<span class='f'>B(d)</span>","Simplification using (2) and (3)"],
+        ["<span class='f'>&forall;x (B(x) &rarr; C(x))</span>","Premise"],
+        ["<span class='f'>B(d) &rarr; C(d)</span>","Universal Instantiation (5)"],
+        ["<span class='f'>C(d)</span>","Modus Ponens (4),(6)"]],
+ a:[4],
+ s:`<b>Step 4 names the wrong rule.</b> Simplification extracts a conjunct from <span class="f">X &and; Y</span> and uses a <em>single</em> line.<br>
+    Here we have a <em>disjunction</em> <span class="f">A(d) &or; B(d)</span> together with <span class="f">&not;A(d)</span>, which is <b>Disjunctive syllogism</b>.<br>
+    The conclusion itself is perfectly valid &mdash; only the citation is wrong, which is exactly what these audits test.`},
+
+{t:"deriv",type:"audit",hard:true,need:1,
+ q:`Exactly one step below is <b>not</b> a correct application of the rule it cites. Click that step.`,
+ given:`<b>Premises:</b> <span class="f">p &or; q</span>, <span class="f">p &rarr; r</span>, <span class="f">q &rarr; r</span><br>
+        <b>Conclusion:</b> <span class="f">r</span>`,
+ steps:[["<span class='f'>p &or; q</span>","Premise"],
+        ["<span class='f'>p &rarr; r</span>","Premise"],
+        ["<span class='f'>q &rarr; r</span>","Premise"],
+        ["<span class='f'>r &or; r</span>","Addition using (1),(2),(3)"],
+        ["<span class='f'>r</span>","Idempotent law (4)"]],
+ a:[4],
+ s:`<b>Step 4 cites the wrong rule.</b> Addition is <span class="f">p &rArr; p &or; q</span> &mdash; it invents a new disjunct from a single line and never consumes three premises.<br>
+    Two conditionals plus a disjunction of their hypotheses is <b>Constructive dilemma</b>:
+    <span class="f">(p &rarr; r) &and; (q &rarr; r) &and; (p &or; q) &rArr; r &or; r</span>.<br>
+    Step 5 is fine: <span class="f">r &or; r &equiv; r</span> by idempotence.`},
+
+{t:"deriv",type:"audit",hard:false,need:2,
+ q:`Every step below is correctly justified. Click the two steps referenced as <span class="f">(a)</span> and <span class="f">(b)</span>.`,
+ given:`<b>Premises:</b> <span class="f">&not;p &and; q</span>, <span class="f">r &rarr; p</span>, <span class="f">&not;r &rarr; s</span>, <span class="f">s &rarr; t</span><br>
+        <b>Conclusion:</b> <span class="f">t</span>`,
+ steps:[["<span class='f'>&not;p &and; q</span>","Premise"],
+        ["<span class='f'>&not;p</span>","Simplification (1)"],
+        ["<span class='f'>r &rarr; p</span>","Premise"],
+        ["<span class='f'>&not;r</span>","Modus tollens using _(a)_ and _(b)_"],
+        ["<span class='f'>&not;r &rarr; s</span>","Premise"],
+        ["<span class='f'>s</span>","Modus Ponens (4),(5)"],
+        ["<span class='f'>s &rarr; t</span>","Premise"],
+        ["<span class='f'>t</span>","Modus Ponens (6),(7)"]],
+ a:[2,3],
+ s:`Modus tollens needs a conditional plus the <b>negation of its consequent</b>.<br>
+    The conditional is <span class="f">r &rarr; p</span> at step 3; the negated consequent is <span class="f">&not;p</span>, extracted at step 2 &rArr; <b>(2) and (3)</b>.<br>
+    Citing step 1 instead of step 2 is the common slip &mdash; <span class="f">&not;p &and; q</span> is a conjunction, not the bare negation the rule matches on.`},
+
+{t:"deriv",type:"audit",hard:true,need:1,
+ q:`Exactly one step below is <b>not</b> a correct application of the rule it cites. Click that step.`,
+ given:`<b>Premises:</b> <span class="f">&forall;x (P(x) &rarr; Q(x))</span>, <span class="f">&exist;x &not;Q(x)</span><br>
+        <b>Conclusion:</b> <span class="f">&exist;x &not;P(x)</span>`,
+ steps:[["<span class='f'>&exist;x &not;Q(x)</span>","Premise"],
+        ["<span class='f'>&not;Q(c)</span>","Existential Instantiation (1)"],
+        ["<span class='f'>&forall;x (P(x) &rarr; Q(x))</span>","Premise"],
+        ["<span class='f'>P(c) &rarr; Q(c)</span>","Universal Instantiation (3)"],
+        ["<span class='f'>&not;P(c)</span>","Modus Ponens (2),(4)"],
+        ["<span class='f'>&exist;x &not;P(x)</span>","Existential Generalization (5)"]],
+ a:[5],
+ s:`<b>Step 5 names the wrong rule.</b> The inference is <em>right</em> &mdash; from <span class="f">P(c) &rarr; Q(c)</span> and <span class="f">&not;Q(c)</span> we do get <span class="f">&not;P(c)</span> &mdash;
+    but denying the consequent is <b>Modus tollens</b>, not modus ponens.<br>
+    Modus ponens would need <span class="f">P(c)</span> and would yield <span class="f">Q(c)</span>.<br>
+    The rest of the derivation is a model of good order: EI first with a fresh c, then UI on that same c, then EG at the end.`}
 ];
 
 /* ============================================================
@@ -1689,6 +1853,13 @@ function paintClock(){
 }
 
 /* ---------- question rendering ---------- */
+function toggleStep(it, n){
+  const need = it.q.need, sel = (it.pick || []).slice();
+  const at = sel.indexOf(n);
+  if(at >= 0) sel.splice(at, 1);
+  else { sel.push(n); while(sel.length > need) sel.shift(); }
+  it.pick = sel.length ? sel : null;
+}
 function render(){
   const it = S.items[S.i], q = it.q;
   $("#idx").textContent = `Question ${S.i+1} of ${S.items.length}`;
@@ -1741,6 +1912,23 @@ function render(){
       const b = e.target.closest(".opt"); if(!b) return;
       it.pick = Number(b.dataset.pos); render(); syncSheet();
     };
+  }else if(q.type === "audit"){
+    const msg = $("#auditmsg");
+    const paint = () => {
+      const sel = it.pick || [];
+      $$("#auditlist .arow").forEach(b => b.setAttribute("aria-pressed", sel.includes(Number(b.dataset.n))));
+      const listed = sel.slice().sort((x,y)=>x-y).join(", ");
+      msg.textContent = q.need === 1
+        ? (sel.length ? `Step ${listed} selected. Click another to change it.`
+                      : "Click the one step whose cited justification does not hold.")
+        : `Click the two steps referenced as (a) and (b) — ${sel.length} of 2 selected${sel.length ? ": " + listed : ""}.`;
+      syncSheet();
+    };
+    $("#auditlist").onclick = e => {
+      const b = e.target.closest(".arow"); if(!b) return;
+      toggleStep(it, Number(b.dataset.n)); paint();
+    };
+    paint();
   }else if(q.type === "expr"){
     const el = $("#exprin"), msg = $("#exprmsg");
     const check = () => {
@@ -1785,7 +1973,7 @@ function buildSheet(){
   $("#sheetBody").innerHTML = S.items.map((it,i)=>{
     const cells = it.q.type === "mc"
       ? `<span class="bubs">${KEYS.map((k,p)=>`<span class="bub" data-p="${p}">${k}</span>`).join("")}</span>`
-      : `<span class="sbox">${it.q.type === "expr" ? "f(x)" : "int"}</span>`;
+      : `<span class="sbox">${it.q.type === "expr" ? "f(x)" : it.q.type === "audit" ? "step" : "int"}</span>`;
     return `<button class="srow" data-i="${i}"><span class="n">${i+1}</span>${cells}</button>`;
   }).join("");
   $("#sheetBody").onclick = e => {
@@ -1803,9 +1991,14 @@ function syncSheet(){
       row.querySelectorAll(".bub").forEach((b,p)=>b.classList.toggle("on", it.pick === p));
     }else{
       const box = row.querySelector(".sbox");
-      const empty = it.q.type === "expr" ? "f(x)" : "int";
-      const shown = String(it.pick ?? "");
-      box.textContent = it.pick === null ? empty : (shown.length > 10 ? shown.slice(0,9)+"…" : shown);
+      if(it.pick === null){
+        box.textContent = it.q.type === "expr" ? "f(x)" : it.q.type === "audit" ? "step" : "int";
+      }else if(it.q.type === "audit"){
+        box.textContent = "#" + it.pick.slice().sort((a,b)=>a-b).join(",");
+      }else{
+        const shown = String(it.pick);
+        box.textContent = shown.length > 10 ? shown.slice(0,9)+"…" : shown;
+      }
       box.classList.toggle("on", it.pick !== null);
     }
     if(it.pick !== null) done++;
@@ -1836,6 +2029,9 @@ document.addEventListener("keydown", e=>{
   if(e.key.toLowerCase() === "f"){ it.flag = !it.flag; render(); }
   if(it.q.type === "mc" && ["1","2","3","4"].includes(e.key)){
     it.pick = Number(e.key)-1; render();
+  }else if(it.q.type === "audit" && /^[1-9]$/.test(e.key)){
+    const n = Number(e.key);
+    if(n <= it.q.steps.length){ toggleStep(it, n); render(); }
   }
 });
 
@@ -1849,6 +2045,7 @@ function isRight(it){
   if(it.pick === null) return false;
   if(it.q.type === "mc")  return it.pick === it.correct;
   if(it.q.type === "int") return parseInt(it.pick,10) === it.q.a;
+  if(it.q.type === "audit") return it.pick.length === it.q.a.length && it.q.a.every(n => it.pick.includes(n));
   try{ return equivalent(it.pick, it.q.a); }catch(err){ return false; }
 }
 function finish(auto){
@@ -1902,6 +2099,15 @@ function paintReview(){
         return `<li class="${key?"key":pick?"pick":""}"><span class="k">${KEYS[pos]}</span><span>${q.c[oi]}</span>
           <span class="who">${key?"key":pick?"your answer":""}</span></li>`;
       }).join("") + `</ul>`;
+    }else if(q.type === "audit"){
+      const sel = it.pick || [];
+      ansBlock = `<div class="auditlist done">` + q.steps.map((s,i)=>{
+        const n = i+1, isKey = q.a.includes(n), isPick = sel.includes(n);
+        const tag = isKey ? (isPick ? "key · your pick" : "key") : isPick ? "your pick" : "";
+        return `<div class="arow ${isKey ? "key" : isPick ? "bad" : ""}"><span>${s[0]}</span>
+          <span class="just">${s[1]}${tag ? ` <b class="atag">${tag}</b>` : ""}</span></div>`;
+      }).join("") + `</div>`
+      + (blank ? `<div class="auditmsg">No step was selected.</div>` : ``);
     }else if(q.type === "expr"){
       let note = "your answer";
       if(ok) note = "equivalent ✓";
@@ -1922,7 +2128,7 @@ function paintReview(){
         <span class="mark ${state}">${label}</span></div>
       <p class="stem" style="font-size:16px">${q.q}</p>
       ${q.given ? `<div class="given">${q.given}</div>` : ``}
-      ${q.steps ? `<ol class="steps">${q.steps.map(s=>`<li><span>${s[0]}</span><span class="just">${s[1]}</span></li>`).join("")}</ol>` : ``}
+      ${q.steps && q.type !== "audit" ? `<ol class="steps">${q.steps.map(s=>`<li><span>${s[0]}</span><span class="just">${s[1]}</span></li>`).join("")}</ol>` : ``}
       ${q.fig || ``}
       ${ansBlock}
       <div class="sol"><span class="lbl">Solution</span>${q.s}</div>
