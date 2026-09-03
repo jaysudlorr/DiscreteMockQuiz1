@@ -1,0 +1,1947 @@
+<title>Discrete Structures Mock Exam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --paper:#F5F3EC;
+  --sheet:#FFFFFF;
+  --ink:#14181E;
+  --ink-2:#4E5865;
+  --ink-3:#7E8894;
+  --rule:#DBD7CB;
+  --rule-soft:#EAE7DE;
+  --pen:#1E4B9E;
+  --pen-soft:#E4EAF7;
+  --ok:#0E7350;
+  --ok-soft:#E1F0E8;
+  --no:#AE2F1F;
+  --no-soft:#F7E4E0;
+  --flag:#A2761A;
+  --shadow:0 1px 2px rgba(20,24,30,.06),0 8px 24px -12px rgba(20,24,30,.18);
+  --sans:"IBM Plex Sans",system-ui,sans-serif;
+  --serif:"Spectral",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#11151A;
+    --sheet:#171C23;
+    --ink:#E7E8E3;
+    --ink-2:#A3ADB9;
+    --ink-3:#78838F;
+    --rule:#2A313A;
+    --rule-soft:#222831;
+    --pen:#7FA6EF;
+    --pen-soft:#1B2740;
+    --ok:#57C79A;
+    --ok-soft:#122A22;
+    --no:#E4796A;
+    --no-soft:#2E1A17;
+    --flag:#D8AB56;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -14px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#11151A; --sheet:#171C23; --ink:#E7E8E3; --ink-2:#A3ADB9; --ink-3:#78838F;
+  --rule:#2A313A; --rule-soft:#222831; --pen:#7FA6EF; --pen-soft:#1B2740;
+  --ok:#57C79A; --ok-soft:#122A22; --no:#E4796A; --no-soft:#2E1A17; --flag:#D8AB56;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -14px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:600}
+.f{font-family:var(--mono);font-size:.94em;letter-spacing:-.01em;white-space:nowrap}
+.lbl{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+
+/* ---------- masthead ---------- */
+.mast{border-bottom:1px solid var(--rule);background:var(--sheet)}
+.mast-in{max-width:1180px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.crest{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--pen);border:1px solid var(--pen);border-radius:2px;padding:3px 7px}
+.mast h1{font-family:var(--serif);font-size:20px;letter-spacing:-.01em}
+.mast .sub{color:var(--ink-3);font-size:12.5px}
+.mast-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.clock{font-family:var(--mono);font-size:20px;font-variant-numeric:tabular-nums;padding:2px 10px;border:1px solid var(--rule);border-radius:3px;background:var(--paper)}
+.clock.warn{color:var(--no);border-color:var(--no)}
+.ghost{background:none;border:1px solid var(--rule);border-radius:3px;padding:6px 12px;font-size:13px;color:var(--ink-2)}
+.ghost:hover{border-color:var(--pen);color:var(--pen)}
+
+/* ---------- shell ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:26px 22px 70px}
+
+/* ---------- setup ---------- */
+.setup{max-width:760px;margin:0 auto}
+.setup-head{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:22px}
+.setup-head h2{font-family:var(--serif);font-size:30px;line-height:1.2}
+.setup-head p{margin:8px 0 0;color:var(--ink-2);max-width:64ch}
+.field{padding:18px 0;border-bottom:1px solid var(--rule-soft);display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:start}
+@media(max-width:620px){.field{grid-template-columns:1fr;gap:10px}}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--rule);background:var(--sheet);border-radius:3px;padding:7px 12px;font-size:13.5px;display:flex;align-items:center;gap:8px}
+.chip .n{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.chip[aria-pressed="true"]{border-color:var(--pen);background:var(--pen-soft);color:var(--pen)}
+.chip[aria-pressed="true"] .n{color:var(--pen)}
+.seg{display:inline-flex;justify-self:start;border:1px solid var(--rule);border-radius:3px;overflow:hidden;background:var(--sheet)}
+.seg button{border:0;background:none;padding:7px 15px;font-size:13.5px;border-right:1px solid var(--rule);font-family:var(--mono)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--pen);color:#fff}
+.start{margin-top:26px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn{background:var(--ink);color:var(--paper);border:0;border-radius:3px;padding:12px 26px;font-size:15px;font-weight:600}
+.btn:hover{background:var(--pen);color:#fff}
+.btn.q{background:none;border:1px solid var(--rule);color:var(--ink-2);font-weight:400}
+.btn.q:hover{border-color:var(--pen);color:var(--pen);background:none}
+.note{color:var(--ink-3);font-size:13px}
+.rubric{margin-top:30px;border-left:2px solid var(--rule);padding:2px 0 2px 16px;color:var(--ink-2);font-size:13.5px}
+.rubric b{color:var(--ink);font-weight:600}
+
+/* ---------- exam layout ---------- */
+.exam{display:grid;grid-template-columns:1fr 224px;gap:30px;align-items:start}
+@media(max-width:900px){.exam{grid-template-columns:1fr}}
+
+.progress{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+.progress .idx{font-family:var(--serif);font-size:15px;color:var(--ink-2)}
+.bar{flex:1;height:3px;background:var(--rule-soft);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--pen);transition:width .25s ease}
+
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;box-shadow:var(--shadow);padding:26px 30px 30px}
+@media(max-width:620px){.card{padding:20px 18px 24px}}
+.tagrow{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--pen);background:var(--pen-soft);padding:3px 8px;border-radius:2px}
+.tag.hard{color:var(--flag);background:transparent;border:1px solid var(--flag)}
+.flagbtn{margin-left:auto;background:none;border:1px solid var(--rule);border-radius:3px;padding:5px 11px;font-size:12.5px;color:var(--ink-3)}
+.flagbtn[aria-pressed="true"]{color:var(--flag);border-color:var(--flag)}
+.stem{font-family:var(--serif);font-size:19px;line-height:1.65;margin:0 0 6px}
+.stem .f{font-size:.9em}
+.given{margin:14px 0 0;padding:12px 16px;background:var(--paper);border:1px solid var(--rule-soft);border-radius:3px;font-size:14px}
+.given ul,.given ol{margin:6px 0 0;padding-left:20px}
+.given li{margin:3px 0}
+.steps{list-style:none;margin:10px 0 0;padding:0;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:26px 1fr auto;gap:10px;padding:4px 0;border-bottom:1px dotted var(--rule);font-size:13.5px}
+.steps li::before{content:counter(s) "."; font-family:var(--mono);color:var(--ink-3)}
+.steps .just{color:var(--ink-3);font-size:12.5px;text-align:right}
+figure{margin:16px 0 0;text-align:center}
+figure svg{max-width:100%;height:auto}
+figcaption{font-size:12.5px;color:var(--ink-3);margin-top:6px}
+
+.opts{margin-top:20px;display:flex;flex-direction:column;gap:9px}
+.opt{display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:baseline;text-align:left;background:var(--sheet);border:1px solid var(--rule);border-radius:3px;padding:11px 14px;font-size:14.5px;line-height:1.55}
+.opt:hover{border-color:var(--pen)}
+.opt .k{font-family:var(--mono);font-size:12px;color:var(--ink-3);border:1px solid var(--rule);border-radius:50%;width:22px;height:22px;display:grid;place-items:center}
+.opt[aria-pressed="true"]{border-color:var(--pen);background:var(--pen-soft)}
+.opt[aria-pressed="true"] .k{background:var(--pen);color:#fff;border-color:var(--pen)}
+
+.intbox{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.intbox input{font-family:var(--mono);font-size:20px;width:150px;padding:9px 12px;border:1px solid var(--rule);border-bottom:2px solid var(--ink);border-radius:3px 3px 0 0;background:var(--paper);color:var(--ink)}
+.intbox input:focus{outline:2px solid var(--pen);outline-offset:1px}
+.intbox .hint{font-size:13px;color:var(--ink-3)}
+
+.expr{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+.exprin{font-family:var(--mono);font-size:19px;width:100%;padding:11px 13px;border:1px solid var(--rule);border-bottom:2px solid var(--ink);border-radius:3px 3px 0 0;background:var(--paper);color:var(--ink)}
+.exprin:focus{outline:2px solid var(--pen);outline-offset:1px}
+.pad{display:flex;flex-wrap:wrap;gap:6px}
+.pad button{font-family:var(--mono);font-size:15px;min-width:38px;padding:7px 10px;border:1px solid var(--rule);background:var(--sheet);border-radius:3px;line-height:1.1}
+.pad button:hover{border-color:var(--pen);color:var(--pen)}
+.pad button.var{background:var(--pen-soft);border-color:var(--pen);color:var(--pen);font-weight:500}
+.pad button.util{font-size:12px;color:var(--ink-3);min-width:0}
+.exprmsg{font-family:var(--mono);font-size:12.5px;min-height:18px;color:var(--ink-3)}
+.exprmsg.ok{color:var(--ok)}
+.exprmsg.bad{color:var(--no)}
+.exprhint{font-size:13px;color:var(--ink-3);max-width:66ch}
+.ropts .f{white-space:normal;word-break:break-word}
+
+.auditlist{margin-top:20px;counter-reset:s;display:flex;flex-direction:column;gap:4px}
+.auditlist.done{margin-top:14px}
+.arow{counter-increment:s;width:100%;display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:baseline;text-align:left;
+      background:var(--sheet);border:1px solid var(--rule);border-radius:3px;padding:9px 13px;font-size:14px}
+.arow::before{content:counter(s) "."; font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+button.arow:hover{border-color:var(--pen)}
+.arow[aria-pressed="true"]{border-color:var(--pen);background:var(--pen-soft)}
+.arow[aria-pressed="true"]::before{color:var(--pen);font-weight:600}
+.arow .just{color:var(--ink-3);font-size:12.5px;text-align:right}
+.arow[aria-pressed="true"] .just{color:var(--pen)}
+.arow.key{border-color:var(--ok);background:var(--ok-soft)}
+.arow.bad{border-color:var(--no);background:var(--no-soft)}
+.atag{font-size:10px;letter-spacing:.09em;text-transform:uppercase;margin-left:8px}
+.arow.key .atag{color:var(--ok)}
+.arow.bad .atag{color:var(--no)}
+.auditmsg{margin-top:12px;font-size:13px;color:var(--ink-3)}
+@media(max-width:620px){
+  .arow{grid-template-columns:22px 1fr;gap:6px}
+  .arow .just{grid-column:2;text-align:left}
+}
+
+.navrow{margin-top:22px;display:flex;gap:10px;align-items:center}
+.navrow .spacer{flex:1}
+
+/* ---------- answer sheet rail ---------- */
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;box-shadow:var(--shadow);position:sticky;top:16px}
+.sheet h3{font-size:11px;letter-spacing:.13em;text-transform:uppercase;padding:12px 14px 10px;border-bottom:1px solid var(--rule);color:var(--ink-2)}
+.sheet-body{max-height:min(62vh,540px);overflow-y:auto;padding:8px 6px}
+.srow{width:100%;display:grid;grid-template-columns:26px 1fr;gap:6px;align-items:center;background:none;border:0;border-radius:3px;padding:4px 6px}
+.srow:hover{background:var(--paper)}
+.srow.cur{background:var(--pen-soft);box-shadow:inset 2px 0 0 var(--pen)}
+.srow .n{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-align:right}
+.srow.flagged .n{color:var(--flag);font-weight:600}
+.bubs{display:flex;gap:5px}
+.bub{width:16px;height:16px;border:1px solid var(--rule);border-radius:50%;font-family:var(--mono);font-size:9px;display:grid;place-items:center;color:var(--ink-3)}
+.bub.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.sbox{height:16px;border:1px solid var(--rule);border-radius:2px;font-family:var(--mono);font-size:10px;display:grid;place-items:center;color:var(--ink-2);padding:0 4px;min-width:44px;justify-self:start}
+.sbox.on{border-color:var(--ink);color:var(--ink);font-weight:500}
+.sheet-foot{border-top:1px solid var(--rule);padding:12px 14px;display:flex;flex-direction:column;gap:9px}
+.tally{font-size:12.5px;color:var(--ink-2);display:flex;justify-content:space-between}
+.tally b{font-family:var(--mono);color:var(--ink)}
+.sheet-foot .btn{padding:9px 0;width:100%;font-size:14px}
+
+/* ---------- results ---------- */
+.res-head{display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:center;border-bottom:2px solid var(--ink);padding-bottom:22px;margin-bottom:26px}
+@media(max-width:620px){.res-head{grid-template-columns:1fr;gap:18px}}
+.score{font-family:var(--serif);font-size:64px;line-height:.95;font-variant-numeric:tabular-nums}
+.score span{font-size:26px;color:var(--ink-3)}
+.verdict{font-family:var(--serif);font-size:22px;margin-bottom:4px}
+.res-meta{color:var(--ink-2);font-size:13.5px}
+.bars{display:flex;flex-direction:column;gap:10px;margin:0 0 34px}
+.brow{display:grid;grid-template-columns:200px 1fr 58px;gap:14px;align-items:center;font-size:13.5px}
+@media(max-width:620px){.brow{grid-template-columns:130px 1fr 52px;gap:10px;font-size:12.5px}}
+.btrack{height:8px;background:var(--rule-soft);border-radius:4px;overflow:hidden}
+.btrack i{display:block;height:100%;background:var(--pen)}
+.btrack i.low{background:var(--no)}
+.btrack i.high{background:var(--ok)}
+.bnum{font-family:var(--mono);font-size:12.5px;color:var(--ink-2);text-align:right;font-variant-numeric:tabular-nums}
+.rev{display:flex;flex-direction:column;gap:16px}
+.rcard{background:var(--sheet);border:1px solid var(--rule);border-left:3px solid var(--rule);border-radius:4px;padding:20px 24px}
+.rcard.right{border-left-color:var(--ok)}
+.rcard.wrong{border-left-color:var(--no)}
+.rcard.blank{border-left-color:var(--ink-3)}
+.rhead{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:12.5px}
+.rno{font-family:var(--mono);color:var(--ink-3)}
+.mark{font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:600;padding:2px 8px;border-radius:2px}
+.mark.right{color:var(--ok);background:var(--ok-soft)}
+.mark.wrong{color:var(--no);background:var(--no-soft)}
+.mark.blank{color:var(--ink-3);border:1px solid var(--rule)}
+.ropts{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:5px}
+.ropts li{display:grid;grid-template-columns:24px 1fr auto;gap:10px;font-size:14px;padding:7px 12px;border-radius:3px;border:1px solid transparent;align-items:baseline}
+.ropts li .k{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.ropts li.key{background:var(--ok-soft);border-color:var(--ok)}
+.ropts li.pick{background:var(--no-soft);border-color:var(--no)}
+.ropts .who{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.ropts li.key .who{color:var(--ok)}
+.ropts li.pick .who{color:var(--no)}
+.sol{margin-top:16px;padding-top:14px;border-top:1px solid var(--rule-soft);font-size:14px;color:var(--ink-2)}
+.sol b{color:var(--ink)}
+.sol .lbl{display:block;margin-bottom:6px}
+.res-actions{display:flex;gap:12px;margin:30px 0 8px;flex-wrap:wrap}
+.filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+
+svg .vfill{fill:var(--pen);opacity:.10}
+svg .vline{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+svg .vtxt{fill:var(--ink-2);font-family:var(--mono);font-size:12px}
+svg .vset{fill:var(--ink);font-family:var(--serif);font-size:15px;font-style:italic}
+svg .vbox{fill:none;stroke:var(--rule);stroke-width:1.2}
+
+:focus-visible{outline:2px solid var(--pen);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="mast">
+  <div class="mast-in">
+    <span class="crest">2110xxx</span>
+    <div>
+      <h1>Discrete Structures &mdash; Mock Exam</h1>
+      <div class="sub">Logic &middot; Sets &middot; Functions &middot; Relations &middot; Methods of Proof</div>
+    </div>
+    <div class="mast-right">
+      <div class="clock" id="clock" hidden>60:00</div>
+      <button class="ghost" id="quit" hidden>Exit exam</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= SETUP ================= -->
+<section id="setup" class="setup">
+  <div class="setup-head">
+    <h2>Build your paper</h2>
+    <p>A 109-question bank modelled on Quiz 1 (Propositional &amp; Predicate Logic, Set, Function &amp; Relation)
+       and Quiz 2 (Methods of Proof), pitched a notch harder. Three item types &mdash; multiple choice,
+       integer answer, and <b>formula entry</b>, where you translate an English sentence into logic and any
+       logically equivalent formula is accepted. Shuffled every attempt, with a full worked solution for every question.</p>
+  </div>
+
+  <div class="field">
+    <span class="lbl">Coverage</span>
+    <div>
+      <div class="chips" id="topics"></div>
+      <div class="note" style="margin-top:9px">Click to include or exclude a topic &mdash; the number is how many items the bank holds.</div>
+    </div>
+  </div>
+
+  <div class="field">
+    <span class="lbl">Length</span>
+    <div class="seg" id="count" role="group" aria-label="Number of questions">
+      <button data-n="10">10</button>
+      <button data-n="20" aria-pressed="true">20</button>
+      <button data-n="30">30</button>
+      <button data-n="50">50</button>
+      <button data-n="0">All</button>
+    </div>
+  </div>
+
+  <div class="field">
+    <span class="lbl">Time limit</span>
+    <div class="seg" id="time" role="group" aria-label="Time limit">
+      <button data-m="30">30 min</button>
+      <button data-m="60" aria-pressed="true">60 min</button>
+      <button data-m="90">90 min</button>
+      <button data-m="0">Untimed</button>
+    </div>
+  </div>
+
+  <div class="start">
+    <button class="btn" id="go">Start exam</button>
+    <span class="note" id="startNote"></span>
+  </div>
+
+  <div class="rubric">
+    <b>Rules</b> &mdash; one point per question, no penalty for a wrong answer &middot;
+    integer items take a whole number only (negatives allowed); formula items are graded by truth table, so
+    <span class="f">&not;p &or; q</span> and <span class="f">p &rarr; q</span> both count &middot;
+    press <span class="f">1&ndash;4</span> to choose, <span class="f">&larr; &rarr;</span> to move between questions,
+    <span class="f">F</span> to flag one for review &middot; solutions are revealed after you hand in the answer sheet.
+  </div>
+</section>
+
+<!-- ================= EXAM ================= -->
+<section id="exam" class="exam" hidden>
+  <div>
+    <div class="progress">
+      <span class="idx" id="idx">Question 1 of 20</span>
+      <span class="bar"><i id="barfill" style="width:0%"></i></span>
+    </div>
+    <article class="card" id="card"></article>
+    <div class="navrow">
+      <button class="btn q" id="prev">&larr; Previous</button>
+      <button class="btn q" id="next">Next &rarr;</button>
+      <span class="spacer"></span>
+      <button class="btn q" id="clear">Clear this answer</button>
+    </div>
+  </div>
+
+  <aside class="sheet">
+    <h3>Answer Sheet</h3>
+    <div class="sheet-body" id="sheetBody"></div>
+    <div class="sheet-foot">
+      <div class="tally"><span>Answered</span><b id="tallyDone">0 / 20</b></div>
+      <div class="tally"><span>Flagged</span><b id="tallyFlag">0</b></div>
+      <button class="btn" id="submit">Hand in</button>
+    </div>
+  </aside>
+</section>
+
+<!-- ================= RESULT ================= -->
+<section id="result" hidden>
+  <div class="res-head">
+    <div class="score" id="score">0<span>/20</span></div>
+    <div>
+      <div class="verdict" id="verdict"></div>
+      <div class="res-meta" id="resMeta"></div>
+    </div>
+  </div>
+  <div class="lbl" style="margin-bottom:10px">Score by topic</div>
+  <div class="bars" id="bars"></div>
+
+  <div class="lbl" style="margin-bottom:10px">Worked solutions</div>
+  <div class="filters" id="filters">
+    <button class="chip" data-f="all" aria-pressed="true">All questions</button>
+    <button class="chip" data-f="wrong" aria-pressed="false">Wrong only</button>
+    <button class="chip" data-f="blank" aria-pressed="false">Unanswered only</button>
+  </div>
+  <div class="rev" id="rev"></div>
+
+  <div class="res-actions">
+    <button class="btn" id="again">New paper</button>
+    <button class="btn q" id="retryWrong">Retry the ones I missed</button>
+  </div>
+</section>
+</main>
+
+<script>
+/* ============================================================
+   Venn diagram (regions a–h) reused by the set questions
+   ============================================================ */
+const VENN = `<figure><svg viewBox="0 0 290 258" role="img" aria-label="Venn diagram of sets A, B, C with regions a to h">
+  <rect class="vbox" x="8" y="14" width="274" height="232" rx="3"/>
+  <text class="vtxt" x="17" y="30">U</text>
+  <circle class="vfill" cx="105" cy="95" r="62"/><circle class="vfill" cx="185" cy="95" r="62"/><circle class="vfill" cx="145" cy="160" r="62"/>
+  <circle class="vline" cx="105" cy="95" r="62"/><circle class="vline" cx="185" cy="95" r="62"/><circle class="vline" cx="145" cy="160" r="62"/>
+  <text class="vset" x="48" y="42">A</text><text class="vset" x="236" y="42">B</text><text class="vset" x="141" y="240">C</text>
+  <text class="vtxt" x="74" y="82">a</text><text class="vtxt" x="141" y="82">b</text><text class="vtxt" x="208" y="82">c</text>
+  <text class="vtxt" x="104" y="144">d</text><text class="vtxt" x="141" y="122">e</text><text class="vtxt" x="178" y="144">f</text>
+  <text class="vtxt" x="141" y="190">g</text><text class="vtxt" x="27" y="228">h</text>
+</svg><figcaption>Regions a&ndash;h of the Venn diagram (h is everything outside all three circles)</figcaption></figure>`;
+
+/* ============================================================
+   QUESTION BANK — 80 items
+   type 'mc'  : a = index of the correct choice
+   type 'int' : a = the correct integer
+   ============================================================ */
+const TOPICS = {
+  prop:  "Propositional Logic",
+  trans: "Translation & Formalization",
+  pred:  "Predicate Logic & Inference",
+  deriv: "Derivations & Step Audit",
+  set:   "Set Theory",
+  func:  "Functions",
+  rel:   "Relations",
+  proof: "Methods of Proof"
+};
+
+const BANK = [
+/* ==================== PROPOSITIONAL LOGIC (14) ==================== */
+{t:"prop",type:"mc",hard:false,
+ q:`Consider the sentence <em>&ldquo;Roses are red and violets are blue, <b>only if</b> you like flowers.&rdquo;</em>`,
+ given:`Let <span class="f">p</span>: Roses are red, <span class="f">q</span>: Violets are blue, <span class="f">r</span>: You like flowers.<br>Which is the <b>contrapositive</b>?`,
+ c:[`<span class="f">&not;r &rarr; (&not;p &or; &not;q)</span>`,
+    `<span class="f">&not;r &rarr; (&not;p &and; &not;q)</span>`,
+    `<span class="f">(&not;p &or; &not;q) &rarr; &not;r</span>`,
+    `<span class="f">r &rarr; (p &and; q)</span>`],
+ a:0,
+ s:`&ldquo;A <b>only if</b> B&rdquo; translates to <span class="f">A &rarr; B</span>, not <span class="f">B &rarr; A</span>. So the sentence is <span class="f">(p &and; q) &rarr; r</span>.<br>
+    Contrapositive: <span class="f">&not;r &rarr; &not;(p &and; q)</span>, and De Morgan turns the consequent into <span class="f">&not;p &or; &not;q</span>.<br>
+    Distractors: <span class="f">(&not;p &or; &not;q) &rarr; &not;r</span> is the inverse; <span class="f">r &rarr; (p &and; q)</span> is the converse.`},
+
+{t:"prop",type:"mc",hard:true,
+ q:`Classify <span class="f">((p &rarr; q) &rarr; r) &rarr; (p &rarr; (q &rarr; r))</span>.`,
+ c:[`Tautology`,`Contradiction`,`Contingency`,`Tautology only when <span class="f">p</span> is true`],
+ a:0,
+ s:`Suppose the whole implication were false: the antecedent is true and the consequent is false.<br>
+    <span class="f">p &rarr; (q &rarr; r)</span> is false in exactly one case: <span class="f">p = T, q = T, r = F</span>.<br>
+    Plug that in: <span class="f">p &rarr; q = T</span>, so <span class="f">(p &rarr; q) &rarr; r = T &rarr; F = F</span> &mdash; the antecedent is false, contradicting the assumption.<br>
+    No falsifying row exists &rArr; <b>tautology</b>.<br>
+    Note the other direction, <span class="f">(p &rarr; (q &rarr; r)) &rarr; ((p &rarr; q) &rarr; r)</span>, is <em>not</em> a tautology (try <span class="f">p = F, r = F</span>).`},
+
+{t:"prop",type:"mc",hard:false,
+ q:`Let <span class="f">p = F</span>, <span class="f">q = T</span>, <span class="f">r = F</span>, with the truth value of <span class="f">s</span> unknown.<br>What is the truth value of <span class="f">(&not;p &and; s) &rarr; (r &or; &not;s)</span>?`,
+ c:[`Depends on <span class="f">s</span> &mdash; true exactly when <span class="f">s = F</span>`,
+    `True regardless of <span class="f">s</span>`,
+    `False regardless of <span class="f">s</span>`,
+    `Depends on <span class="f">s</span> &mdash; true exactly when <span class="f">s = T</span>`],
+ a:0,
+ s:`<span class="f">&not;p = T</span>, so the antecedent <span class="f">&not;p &and; s &equiv; s</span>.<br>
+    <span class="f">r = F</span>, so the consequent <span class="f">r &or; &not;s &equiv; &not;s</span>.<br>
+    The whole thing is <span class="f">s &rarr; &not;s &equiv; &not;s &or; &not;s &equiv; &not;s</span>, which is true exactly when <span class="f">s = F</span>.`},
+
+{t:"prop",type:"mc",hard:false,
+ q:`Are these three statements <b>consistent</b>?`,
+ given:`<ol><li>If you study, you pass.</li><li>You do not pass, or you celebrate.</li><li>You do not celebrate, and you study.</li></ol>
+        Let <span class="f">s</span>: you study, <span class="f">p</span>: you pass, <span class="f">c</span>: you celebrate.`,
+ c:[`Inconsistent &mdash; (3) forces <span class="f">s = T, c = F</span>, which then makes (2) false`,
+    `Consistent, witnessed by <span class="f">s = T, p = T, c = T</span>`,
+    `Consistent, witnessed by <span class="f">s = F, p = F, c = F</span>`,
+    `Inconsistent &mdash; statement (2) is a contradiction on its own`],
+ a:0,
+ s:`(3) <span class="f">&not;c &and; s</span> immediately forces <span class="f">s = T</span> and <span class="f">c = F</span>.<br>
+    (1) <span class="f">s &rarr; p</span> then forces <span class="f">p = T</span>.<br>
+    (2) <span class="f">&not;p &or; c = F &or; F = F</span> &mdash; contradiction.<br>
+    No assignment satisfies all three, so they are <b>inconsistent</b>. The <span class="f">s = F</span> option is dead on arrival because (3) asserts <span class="f">s</span>.`},
+
+{t:"prop",type:"int",hard:true,
+ q:`Of the 16 rows in the truth table for <span class="f">p, q, r, s</span>, how many make
+    <span class="f">(p &rarr; q) &and; (q &rarr; r) &and; (r &rarr; s)</span> true?`,
+ a:5,
+ s:`<span class="f">x &rarr; y</span> fails only when <span class="f">x = T, y = F</span>, so the three conjuncts jointly forbid a T followed by an F.<br>
+    Ordering <span class="f">F &lt; T</span>, the condition is exactly <span class="f">p &le; q &le; r &le; s</span>.<br>
+    A non-decreasing 0/1 string of length 4 is determined by where the T's start, giving 5 strings:<br>
+    <span class="f">FFFF, FFFT, FFTT, FTTT, TTTT</span> &rArr; <b>5</b>.`},
+
+{t:"prop",type:"int",hard:false,
+ q:`Among the 8 rows for <span class="f">p, q, r</span>, how many make <span class="f">(p &or; q) &rarr; (q &and; r)</span> <b>false</b>?`,
+ a:4,
+ s:`It is false exactly when the antecedent is true and the consequent is false.<br>
+    <span class="f">p &or; q = T</span> for <span class="f">(p,q) &isin; {TT, TF, FT}</span>, times 2 values of <span class="f">r</span> = 6 rows.<br>
+    Of those, <span class="f">q &and; r = T</span> at <span class="f">(T,T,T)</span> and <span class="f">(F,T,T)</span> = 2 rows.<br>
+    <span class="f">6 &minus; 2 = 4</span>.`},
+
+{t:"prop",type:"mc",hard:false,
+ q:`Which is logically equivalent to <span class="f">&not;(p &rarr; (q &and; &not;r))</span>?`,
+ c:[`<span class="f">p &and; (&not;q &or; r)</span>`,
+    `<span class="f">p &and; &not;q &and; r</span>`,
+    `<span class="f">&not;p &or; (q &and; &not;r)</span>`,
+    `<span class="f">p &or; (&not;q &and; r)</span>`],
+ a:0,
+ s:`<span class="f">&not;(A &rarr; B) &equiv; A &and; &not;B</span>, giving <span class="f">p &and; &not;(q &and; &not;r)</span>.<br>
+    De Morgan: <span class="f">&not;(q &and; &not;r) &equiv; &not;q &or; r</span>.<br>
+    Result: <span class="f">p &and; (&not;q &or; r)</span>. The outer connective stays <span class="f">&and;</span> &mdash; only the inner conjunction flips.`},
+
+{t:"prop",type:"mc",hard:true,
+ q:`Simplify <span class="f">((q &rarr; &not;p) &or; q) &and; &not;q</span> as far as possible.`,
+ c:[`<span class="f">&not;q</span>`,`<span class="f">&not;p &and; &not;q</span>`,`<span class="f">F</span> (contradiction)`,`<span class="f">&not;p &or; &not;q</span>`],
+ a:0,
+ s:`<span class="f">q &rarr; &not;p &equiv; &not;q &or; &not;p</span>.<br>
+    So <span class="f">(q &rarr; &not;p) &or; q &equiv; (&not;q &or; &not;p) &or; q &equiv; (&not;q &or; q) &or; &not;p &equiv; T</span>.<br>
+    What remains is <span class="f">T &and; &not;q &equiv; &not;q</span>.<br>
+    The common wrong answer <span class="f">&not;p &and; &not;q</span> comes from forgetting that <span class="f">&not;q &or; q</span> already absorbed everything.`},
+
+{t:"prop",type:"int",hard:true,
+ q:`How many compound propositions in two variables <span class="f">p, q</span> are there <b>up to logical equivalence</b>?`,
+ a:16,
+ s:`A proposition in <span class="f">p, q</span> is completely determined by its output column in the truth table.<br>
+    The table has <span class="f">2&sup2; = 4</span> rows and each row independently takes T or F.<br>
+    Distinct columns: <span class="f">2&#8308; = 16</span>. Two formulas are equivalent iff their columns agree everywhere &rArr; <b>16</b>.`},
+
+{t:"prop",type:"mc",hard:false,
+ q:`What is the negation of &ldquo;If you study, then you pass or you cheat&rdquo;?`,
+ c:[`You study, and you do not pass, and you do not cheat`,
+    `If you do not study, then you do not pass and you do not cheat`,
+    `You do not study, or you pass, or you cheat`,
+    `You study, and you do not pass, or you do not cheat`],
+ a:0,
+ s:`The sentence is <span class="f">s &rarr; (p &or; c)</span>.<br>
+    <span class="f">&not;(A &rarr; B) &equiv; A &and; &not;B</span>, so the negation is <span class="f">s &and; &not;(p &or; c) &equiv; s &and; &not;p &and; &not;c</span>.<br>
+    A negated conditional is never another conditional &mdash; it is a conjunction asserting the hypothesis and denying the conclusion.`},
+
+{t:"prop",type:"int",hard:true,
+ q:`Of the 16 rows for <span class="f">p, q, r, s</span>, how many make <span class="f">(p &oplus; q) &oplus; (r &oplus; s)</span> true?`,
+ a:8,
+ s:`Iterated XOR is true exactly when an <b>odd number</b> of the four variables are true.<br>
+    Count: <span class="f">C(4,1) + C(4,3) = 4 + 4 = 8</span>.<br>
+    (General fact: for <span class="f">n &ge; 1</span> variables, XOR is true on exactly half the rows, <span class="f">2&#8319;&#8315;&sup1;</span>.)`},
+
+{t:"prop",type:"mc",hard:true,
+ q:`Which set of connectives is <b>functionally complete</b> (able to express every truth function)?`,
+ c:[`<span class="f">{&not;, &and;}</span>`,`<span class="f">{&and;, &or;}</span>`,`<span class="f">{&rarr;, &and;}</span>`,`<span class="f">{&harr;, &oplus;}</span>`],
+ a:0,
+ s:`<b><span class="f">{&not;, &and;}</span> works:</b> <span class="f">p &or; q &equiv; &not;(&not;p &and; &not;q)</span> and <span class="f">p &rarr; q &equiv; &not;(p &and; &not;q)</span>.<br>
+    <b><span class="f">{&and;, &or;}</span> fails:</b> every such formula outputs T when all variables are T, so <span class="f">&not;p</span> is unreachable.<br>
+    <b><span class="f">{&rarr;, &and;}</span> fails</b> for the same reason (no constant F available).<br>
+    <b><span class="f">{&harr;, &oplus;}</span> fails:</b> these are linear (affine) connectives and cannot produce <span class="f">&and;</span>.`},
+
+{t:"prop",type:"mc",hard:true,
+ q:`On an island every inhabitant is a knight (always tells the truth) or a knave (always lies).<br>
+    A says: &ldquo;Both of us are knaves.&rdquo; What are A and B?`,
+ c:[`A is a knave and B is a knight`,
+    `Both are knaves`,
+    `A is a knight and B is a knave`,
+    `The situation is impossible`],
+ a:0,
+ s:`Suppose A is a knight. Then the statement is true, so A is a knave &mdash; contradiction. Hence <b>A is a knave</b>.<br>
+    A knave's statement is false, so &ldquo;both are knaves&rdquo; is false. Since A <em>is</em> a knave, the failure must come from B &rArr; <b>B is a knight</b>.<br>
+    Formally: A is a knight <span class="f">&harr; (&not;K<sub>A</sub> &and; &not;K<sub>B</sub>)</span>, which is satisfiable only at <span class="f">K<sub>A</sub> = F, K<sub>B</sub> = T</span>.`},
+
+{t:"prop",type:"int",hard:true,
+ q:`How many of the 8 rows for <span class="f">p, q, r</span> satisfy
+    <span class="f">(p &harr; q) &and; (q &harr; r) &and; (r &harr; &not;p)</span>?`,
+ a:0,
+ s:`<span class="f">p &harr; q</span> and <span class="f">q &harr; r</span> force <span class="f">p = q = r</span>.<br>
+    But <span class="f">r &harr; &not;p</span> forces <span class="f">r &ne; p</span>.<br>
+    The two requirements cannot hold together &rArr; the formula is a <b>contradiction</b>, satisfied by <b>0</b> rows.`},
+
+/* ==================== PREDICATE LOGIC & INFERENCE (12) ==================== */
+{t:"pred",type:"mc",hard:false,
+ q:`With domain <span class="f">&#8477;</span>, which statement is <b>true</b>?`,
+ c:[`<span class="f">&forall;x &exist;y (x&sup2; = y)</span>`,
+    `<span class="f">&exist;y &forall;x (x&sup2; = y)</span>`,
+    `<span class="f">&forall;x &exist;y (x = y&sup2;)</span>`,
+    `<span class="f">&forall;x &forall;y (x&sup2; = y&sup2; &rarr; x = y)</span>`],
+ a:0,
+ s:`<b>True:</b> <span class="f">&forall;x &exist;y (x&sup2; = y)</span> &mdash; pick <span class="f">y = x&sup2;</span>; the witness may depend on x.<br>
+    <b>False:</b> <span class="f">&exist;y &forall;x (x&sup2; = y)</span> demands one fixed y equal to every square.<br>
+    <b>False:</b> <span class="f">&forall;x &exist;y (x = y&sup2;)</span> breaks at <span class="f">x = &minus;1</span> since squares are non-negative in &#8477;.<br>
+    <b>False:</b> the last one breaks at <span class="f">x = 1, y = &minus;1</span>.<br>
+    Moral: swapping <span class="f">&forall;&exist;</span> for <span class="f">&exist;&forall;</span> changes the meaning.`},
+
+{t:"pred",type:"mc",hard:false,
+ q:`What is the negation of <span class="f">&forall;x &exist;y (P(x,y) &rarr; &not;Q(y))</span>?`,
+ c:[`<span class="f">&exist;x &forall;y (P(x,y) &and; Q(y))</span>`,
+    `<span class="f">&exist;x &forall;y (P(x,y) &rarr; Q(y))</span>`,
+    `<span class="f">&forall;x &exist;y (&not;P(x,y) &and; Q(y))</span>`,
+    `<span class="f">&exist;x &exist;y (P(x,y) &and; Q(y))</span>`],
+ a:0,
+ s:`Push the negation inward, flipping each quantifier:<br>
+    <span class="f">&not;&forall;x &exist;y (&hellip;) &equiv; &exist;x &forall;y &not;(P(x,y) &rarr; &not;Q(y))</span>.<br>
+    Then <span class="f">&not;(A &rarr; B) &equiv; A &and; &not;B</span> gives <span class="f">&not;(P &rarr; &not;Q) &equiv; P &and; Q</span>.<br>
+    Result: <span class="f">&exist;x &forall;y (P(x,y) &and; Q(y))</span>.`},
+
+{t:"pred",type:"int",hard:true,
+ q:`Let the domain be <span class="f">{1, 2, 3, 4}</span> and let <span class="f">P(x,y)</span> mean &ldquo;<span class="f">x + y</span> is even&rdquo;.<br>
+    How many of the following are <b>true</b>?`,
+ given:`<ol><li><span class="f">&forall;x &forall;y P(x,y)</span></li><li><span class="f">&forall;x &exist;y P(x,y)</span></li><li><span class="f">&exist;x &forall;y P(x,y)</span></li><li><span class="f">&exist;x &exist;y P(x,y)</span></li></ol>`,
+ a:2,
+ s:`<span class="f">x + y</span> is even iff x and y have the same parity.<br>
+    (1) <b>False</b> &mdash; <span class="f">x=1, y=2</span> gives 3.<br>
+    (2) <b>True</b> &mdash; take <span class="f">y = x</span>, so <span class="f">2x</span> is always even.<br>
+    (3) <b>False</b> &mdash; one x would have to match both an even and an odd y.<br>
+    (4) <b>True</b> &mdash; <span class="f">x = y = 2</span>.<br>
+    &rArr; <b>2</b> true statements.`},
+
+{t:"pred",type:"mc",hard:true,
+ q:`Over a non-empty domain, which implication is <b>not</b> valid for all predicates <span class="f">P, Q</span>?`,
+ c:[`<span class="f">(&exist;x P(x) &and; &exist;x Q(x)) &rarr; &exist;x (P(x) &and; Q(x))</span>`,
+    `<span class="f">&exist;x (P(x) &and; Q(x)) &rarr; (&exist;x P(x) &and; &exist;x Q(x))</span>`,
+    `<span class="f">&forall;x (P(x) &and; Q(x)) &harr; (&forall;x P(x) &and; &forall;x Q(x))</span>`,
+    `<span class="f">&forall;x P(x) &rarr; &exist;x P(x)</span>`],
+ a:0,
+ s:`Counterexample: domain <span class="f">{1, 2}</span>, <span class="f">P(x)</span> = &ldquo;x is 1&rdquo;, <span class="f">Q(x)</span> = &ldquo;x is 2&rdquo;.<br>
+    Both <span class="f">&exist;x P(x)</span> and <span class="f">&exist;x Q(x)</span> hold, yet no single x satisfies both &rArr; antecedent true, consequent false.<br>
+    The others are valid: <span class="f">&exist;</span> distributes over <span class="f">&and;</span> in one direction only, <span class="f">&forall;</span> distributes over <span class="f">&and;</span> both ways,
+    and a non-empty domain makes <span class="f">&forall; &rarr; &exist;</span> sound.`},
+
+{t:"pred",type:"mc",hard:true,
+ q:`The following derivation contains <b>exactly one</b> faulty step. Which one?`,
+ steps:[["<span class='f'>&forall;x (P(x) &rarr; Q(x))</span>","Premise"],
+        ["<span class='f'>&exist;x P(x)</span>","Premise"],
+        ["<span class='f'>P(c) &rarr; Q(c)</span>","Universal Instantiation (1)"],
+        ["<span class='f'>P(c)</span>","Existential Instantiation (2)"],
+        ["<span class='f'>Q(c)</span>","Modus Ponens (3),(4)"],
+        ["<span class='f'>&exist;x Q(x)</span>","Existential Generalization (5)"]],
+ c:[`Step 4`,`Step 3`,`Step 5`,`Step 6`],
+ a:0,
+ s:`<b>Step 4 is illegal.</b> Existential Instantiation must introduce a <b>fresh</b> constant that has not appeared before,
+    but <span class="f">c</span> was already fixed in step 3 by UI.<br>
+    Doing it this way silently assumes the object guaranteed by <span class="f">&exist;x P(x)</span> happens to be the very c we chose.<br>
+    The fix: apply <b>EI first</b> to obtain <span class="f">P(c)</span> for a new c, then apply UI to that same c &mdash; UI is safe at any time because it holds for every element.<br>
+    Steps 3, 5 and 6 are all correctly justified.`},
+
+{t:"pred",type:"mc",hard:false,
+ q:`From <span class="f">p &or; q</span> and <span class="f">&not;p &or; r</span> we may conclude <span class="f">q &or; r</span>. Which rule is this?`,
+ c:[`Resolution`,`Disjunctive syllogism`,`Hypothetical syllogism`,`Constructive dilemma`],
+ a:0,
+ s:`<b>Resolution:</b> <span class="f">(p &or; q) &and; (&not;p &or; r) &rArr; q &or; r</span> &mdash; cancel the complementary literals.<br>
+    Disjunctive syllogism is <span class="f">(p &or; q) &and; &not;p &rArr; q</span>, the special case where one clause is a single literal.<br>
+    Hypothetical syllogism is <span class="f">(p &rarr; q) &and; (q &rarr; r) &rArr; p &rarr; r</span>.`},
+
+{t:"pred",type:"mc",hard:false,
+ q:`&ldquo;If it rains, the ground is wet. The ground is wet. Therefore it rained.&rdquo; This argument is:`,
+ c:[`Invalid &mdash; the fallacy of affirming the conclusion`,
+    `Valid by modus ponens`,
+    `Valid by modus tollens`,
+    `Invalid &mdash; the fallacy of denying the hypothesis`],
+ a:0,
+ s:`The form is <span class="f">(p &rarr; q) &and; q &rArr; p</span>, which is not a tautology.<br>
+    Counterexample: <span class="f">p = F, q = T</span> &mdash; a sprinkler wets the ground without rain, so the premises hold while the conclusion fails.<br>
+    This is <b>affirming the conclusion</b> (the converse error). Denying the hypothesis is the different mistake <span class="f">(p &rarr; q) &and; &not;p &rArr; &not;q</span>.`},
+
+{t:"pred",type:"mc",hard:true,
+ q:`Which formula says &ldquo;there is <b>exactly one</b> x satisfying <span class="f">P</span>&rdquo;?`,
+ c:[`<span class="f">&exist;x (P(x) &and; &forall;y (P(y) &rarr; y = x))</span>`,
+    `<span class="f">&exist;x P(x) &and; &forall;y &not;P(y)</span>`,
+    `<span class="f">&exist;x &exist;y (P(x) &and; P(y) &and; x &ne; y)</span>`,
+    `<span class="f">&forall;x (P(x) &rarr; &exist;y (P(y) &and; x = y))</span>`],
+ a:0,
+ s:`Uniqueness splits into <b>existence</b> plus <b>no second witness</b>:<br>
+    <span class="f">&exist;x (P(x) &and; &forall;y (P(y) &rarr; y = x))</span> &mdash; something satisfies P, and anything satisfying P equals it.<br>
+    The third option asserts <em>at least two</em> witnesses. The last option is a tautology (take <span class="f">y = x</span>) and says nothing.
+    The second is outright contradictory.`},
+
+{t:"pred",type:"mc",hard:true,
+ q:`Let <span class="f">L(x,y)</span> mean &ldquo;x loves y&rdquo; over the domain of all people.<br>
+    Which formula says &ldquo;there is someone who is loved by everyone&rdquo;?`,
+ c:[`<span class="f">&exist;y &forall;x L(x,y)</span>`,
+    `<span class="f">&forall;x &exist;y L(x,y)</span>`,
+    `<span class="f">&exist;x &forall;y L(x,y)</span>`,
+    `<span class="f">&forall;y &exist;x L(x,y)</span>`],
+ a:0,
+ s:`Fix the beloved first, then quantify over the lovers: <span class="f">&exist;y &forall;x L(x,y)</span>.<br>
+    <span class="f">&exist;x &forall;y L(x,y)</span> says someone loves everyone (the roles are swapped).<br>
+    <span class="f">&forall;y &exist;x L(x,y)</span> says everyone is loved by <em>someone</em> &mdash; the lover may vary, so it is strictly weaker.<br>
+    <span class="f">&forall;x &exist;y L(x,y)</span> says everyone loves someone.`},
+
+{t:"pred",type:"int",hard:false,
+ q:`Let the domain be <span class="f">{1, 2, 3}</span> and <span class="f">P(x,y)</span> mean <span class="f">x &lt; y</span>.<br>
+    How many of <span class="f">&forall;x&forall;y P</span>, <span class="f">&forall;x&exist;y P</span>,
+    <span class="f">&exist;x&forall;y P</span>, <span class="f">&exist;x&exist;y P</span> are <b>true</b>?`,
+ a:1,
+ s:`<span class="f">&forall;x&forall;y</span>: <b>false</b> &mdash; <span class="f">x = y = 1</span> gives <span class="f">1 &lt; 1</span>.<br>
+    <span class="f">&forall;x&exist;y</span>: <b>false</b> &mdash; <span class="f">x = 3</span> has nothing above it in the domain.<br>
+    <span class="f">&exist;x&forall;y</span>: <b>false</b> &mdash; such an x would satisfy <span class="f">x &lt; x</span>.<br>
+    <span class="f">&exist;x&exist;y</span>: <b>true</b> &mdash; <span class="f">1 &lt; 2</span>.<br>
+    &rArr; <b>1</b>.`},
+
+{t:"pred",type:"mc",hard:false,
+ q:`Premises: <span class="f">&forall;x (P(x) &rarr; Q(x))</span> and <span class="f">&not;Q(a)</span> for a specific element a.<br>
+    Which conclusion follows, and by what reasoning?`,
+ c:[`<span class="f">&not;P(a)</span>, by universal instantiation followed by modus tollens`,
+    `<span class="f">&not;P(a)</span>, by universal instantiation followed by modus ponens`,
+    `<span class="f">&forall;x &not;P(x)</span>, by universal modus tollens`,
+    `Nothing follows; the premises are about different objects`],
+ a:0,
+ s:`UI on the first premise gives <span class="f">P(a) &rarr; Q(a)</span> (valid, since it holds for every element including a).<br>
+    With <span class="f">&not;Q(a)</span>, modus tollens yields <span class="f">&not;P(a)</span>. This combination is called <b>universal modus tollens</b>.<br>
+    <span class="f">&forall;x &not;P(x)</span> is far too strong &mdash; we only learned about a. Modus ponens would need <span class="f">P(a)</span>, which we do not have.`},
+
+{t:"pred",type:"mc",hard:true,
+ q:`From <span class="f">&forall;x (P(x) &or; Q(x))</span> and <span class="f">&exist;x &not;P(x)</span>,
+    does <span class="f">&exist;x Q(x)</span> follow?`,
+ c:[`Yes &mdash; instantiate the existential first to get a fresh c with <span class="f">&not;P(c)</span>, then apply UI to c and use disjunctive syllogism`,
+    `Yes &mdash; instantiate the universal first to get <span class="f">P(c) &or; Q(c)</span>, then apply EI with the same c`,
+    `No &mdash; the two premises may talk about different elements`,
+    `No &mdash; <span class="f">&exist;x &not;P(x)</span> does not interact with a disjunction`],
+ a:0,
+ s:`Correct order matters: EI first gives <span class="f">&not;P(c)</span> for a <b>fresh</b> constant c.<br>
+    UI then gives <span class="f">P(c) &or; Q(c)</span> for that same c (legal, because the universal holds of everything).<br>
+    Disjunctive syllogism yields <span class="f">Q(c)</span>, and existential generalization gives <span class="f">&exist;x Q(x)</span>.<br>
+    The second option reverses the order and reuses c in EI &mdash; the same error that invalidates such proofs.`},
+
+/* ==================== SET THEORY (14) ==================== */
+{t:"set",type:"int",hard:true,
+ q:`Let <span class="f">C = {&empty;, {&empty;}, 1, {1,2}}</span> and <span class="f">A = {&empty;, {&empty;}, {1}, 7}</span>.<br>
+    Find <span class="f">|P(C) &cup; C| + |P(A &minus; C)| &minus; |P(C) &minus; A|</span>.`,
+ a:9,
+ s:`<b>|C| = 4</b>, so <span class="f">|P(C)| = 2&#8308; = 16</span>.<br><br>
+    <b>Term 1:</b> <span class="f">|P(C) &cup; C| = |P(C)| + |C| &minus; |P(C) &cap; C|</span>.<br>
+    Which members of C are also <em>subsets</em> of C? <span class="f">&empty;</span> ✓; <span class="f">{&empty;}</span> ✓ (since <span class="f">&empty; &isin; C</span>);
+    <span class="f">1</span> ✗ (not a set); <span class="f">{1,2}</span> ✗ (since <span class="f">2 &notin; C</span>). So the intersection has 2 elements.<br>
+    <span class="f">16 + 4 &minus; 2 = 18</span>.<br><br>
+    <b>Term 2:</b> <span class="f">A &minus; C</span> drops <span class="f">&empty;</span> and <span class="f">{&empty;}</span>, leaving <span class="f">{{1}, 7}</span>
+    &rArr; <span class="f">|P(A &minus; C)| = 2&sup2; = 4</span>.<br><br>
+    <b>Term 3:</b> members of A lying in <span class="f">P(C)</span> are <span class="f">&empty;, {&empty;}, {1}</span> &mdash; all three are subsets of C
+    &rArr; <span class="f">|P(C) &minus; A| = 16 &minus; 3 = 13</span>.<br><br>
+    <b>Total:</b> <span class="f">18 + 4 &minus; 13 = 9</span>.`},
+
+{t:"set",type:"int",hard:false,
+ q:`Let <span class="f">U = {1, 2, 3, &hellip;, 24}</span>, and<br>
+    <span class="f">A = {x &isin; U | x is even}</span>, <span class="f">B = {x &isin; U | 3 divides x}</span>, <span class="f">C = {x &isin; U | x is a perfect square}</span>.<br>
+    Find <span class="f">|A &cap; B| + |B &cup; C| &minus; |A &cap; C|</span>.`,
+ a:13,
+ s:`<span class="f">|A| = 12</span> &middot; <span class="f">B = {3,6,9,12,15,18,21,24}</span>, <span class="f">|B| = 8</span> &middot; <span class="f">C = {1,4,9,16}</span>, <span class="f">|C| = 4</span>.<br>
+    <span class="f">A &cap; B</span> = multiples of 6 = <span class="f">{6,12,18,24}</span> &rArr; 4.<br>
+    <span class="f">|B &cup; C| = 8 + 4 &minus; |B &cap; C|</span> with <span class="f">B &cap; C = {9}</span> &rArr; <span class="f">11</span>.<br>
+    <span class="f">A &cap; C</span> = even perfect squares = <span class="f">{4, 16}</span> &rArr; 2.<br>
+    <span class="f">4 + 11 &minus; 2 = 13</span>.`},
+
+{t:"set",type:"mc",hard:false,
+ q:`In the Venn diagram below, which regions make up <span class="f">(A &oplus; B) &minus; C</span>?<br>
+    <span class="note">(<span class="f">&oplus;</span> is symmetric difference.)</span>`,
+ fig:VENN,
+ c:[`<span class="f">a, c</span>`,`<span class="f">a, c, d, f</span>`,`<span class="f">a, b, c</span>`,`<span class="f">d, f</span>`],
+ a:0,
+ s:`<span class="f">A &oplus; B</span> is everything in exactly one of A, B.<br>
+    Part of A outside B: <span class="f">a, d</span>. Part of B outside A: <span class="f">c, f</span>. So <span class="f">A &oplus; B = {a, c, d, f}</span>.<br>
+    Now remove everything inside C: <span class="f">d</span> and <span class="f">f</span> are both inside C, so they go.<br>
+    Answer: <span class="f">a, c</span>.`},
+
+{t:"set",type:"mc",hard:true,
+ q:`Which expression describes regions <span class="f">b, d, f</span> &mdash; the elements lying in <b>exactly two</b> of the three sets?`,
+ fig:VENN,
+ c:[`<span class="f">((A&cap;B) &cup; (A&cap;C) &cup; (B&cap;C)) &minus; (A&cap;B&cap;C)</span>`,
+    `<span class="f">(A&cap;B) &cup; (A&cap;C) &cup; (B&cap;C)</span>`,
+    `<span class="f">(A &cup; B &cup; C) &minus; (A&cap;B&cap;C)</span>`,
+    `<span class="f">(A&oplus;B&oplus;C) &minus; (A&cap;B&cap;C)</span>`],
+ a:0,
+ s:`<span class="f">(A&cap;B) &cup; (A&cap;C) &cup; (B&cap;C)</span> is everything in <b>at least</b> two sets = <span class="f">b, d, e, f</span>.<br>
+    Subtracting the centre <span class="f">e = A&cap;B&cap;C</span> leaves exactly two &rArr; <span class="f">b, d, f</span>.<br>
+    Other options: <span class="f">(A&cup;B&cup;C) &minus; (A&cap;B&cap;C) = a,b,c,d,f,g</span>;
+    and <span class="f">A&oplus;B&oplus;C</span> means &ldquo;in an odd number of the sets&rdquo; <span class="f">= a, c, e, g</span>, which minus e gives <span class="f">a, c, g</span>.`},
+
+{t:"set",type:"int",hard:true,
+ q:`Let <span class="f">|A| = 8</span>, <span class="f">|B| = 12</span>, <span class="f">|A &cup; B| = 15</span>,
+    <span class="f">|C &cap; B| = 4</span>, <span class="f">|A &cap; B &cap; C| = 2</span>, <span class="f">|A &minus; C| = 6</span>.<br>
+    Find <span class="f">|(A &cap; B) &minus; C|</span>.`,
+ a:3,
+ s:`<span class="f">|A &cap; B| = |A| + |B| &minus; |A &cup; B| = 8 + 12 &minus; 15 = 5</span>.<br>
+    <span class="f">|(A &cap; B) &minus; C| = |A &cap; B| &minus; |A &cap; B &cap; C| = 5 &minus; 2 = 3</span>.`},
+
+{t:"set",type:"int",hard:true,
+ q:`Using the same data (<span class="f">|A| = 8</span>, <span class="f">|B| = 12</span>, <span class="f">|A &cup; B| = 15</span>,
+    <span class="f">|C &cap; B| = 4</span>, <span class="f">|A &cap; B &cap; C| = 2</span>, <span class="f">|A &minus; C| = 6</span>),<br>
+    what is the <b>smallest possible</b> value of <span class="f">|C|</span>?`,
+ a:4,
+ s:`<span class="f">|A &cap; C| = |A| &minus; |A &minus; C| = 8 &minus; 6 = 2</span>.<br>
+    Since <span class="f">|A &cap; B &cap; C| = 2</span> as well, we get <span class="f">A &cap; C = A &cap; B &cap; C</span> &mdash; no element of C sits in A but outside B.<br>
+    C must contain <span class="f">(C &cap; B) &cup; (C &cap; A)</span>, whose size is <span class="f">4 + 2 &minus; 2 = 4</span>.<br>
+    Nothing forces any further elements, so <span class="f">|C|<sub>min</sub> = 4</span>.`},
+
+{t:"set",type:"mc",hard:true,
+ q:`Which statement holds for <b>all</b> sets <span class="f">A, B, C</span>?`,
+ c:[`<span class="f">P(A) &cap; P(B) = P(A &cap; B)</span>`,
+    `<span class="f">P(A) &cup; P(B) = P(A &cup; B)</span>`,
+    `If <span class="f">A &sube; B</span> and <span class="f">A &sube; C</span> then <span class="f">A &sub; B &cap; C</span>`,
+    `<span class="f">(A &minus; B) &minus; C = A &minus; (B &minus; C)</span>`],
+ a:0,
+ s:`<b>True:</b> <span class="f">X &isin; P(A) &cap; P(B) &hArr; X &sube; A and X &sube; B &hArr; X &sube; A &cap; B</span>.<br>
+    <b>False:</b> take <span class="f">A = {1}, B = {2}</span>; then <span class="f">{1,2} &isin; P(A &cup; B)</span> but it is a subset of neither A nor B.<br>
+    <b>False:</b> if <span class="f">A = B = C</span> then <span class="f">A = B &cap; C</span>, which is not a <em>proper</em> subset.<br>
+    <b>False:</b> take <span class="f">A = B = C = {1}</span>; the left side is <span class="f">&empty;</span>, the right side is <span class="f">{1}</span>.`},
+
+{t:"set",type:"int",hard:false,
+ q:`Let <span class="f">A = {x &isin; &#8484; | x is odd and |x| &lt; 9}</span>.<br>
+    How many <b>proper</b> subsets does A have?`,
+ a:255,
+ s:`<span class="f">A = {&minus;7, &minus;5, &minus;3, &minus;1, 1, 3, 5, 7}</span>, so <span class="f">|A| = 8</span>.<br>
+    Total subsets: <span class="f">2&#8312; = 256</span>. A proper subset excludes A itself &rArr; <span class="f">256 &minus; 1 = 255</span>.<br>
+    Watch the strict inequality: <span class="f">&plusmn;9</span> are excluded, and <span class="f">&empty;</span> does count as a proper subset.`},
+
+{t:"set",type:"int",hard:true,
+ q:`A set A has 5 elements. How many subsets of A have <b>even</b> cardinality (including <span class="f">&empty;</span>)?`,
+ a:16,
+ s:`Count directly: <span class="f">C(5,0) + C(5,2) + C(5,4) = 1 + 10 + 5 = 16</span>.<br>
+    Slicker argument: fix one element x. Pair every subset <span class="f">S</span> with <span class="f">S &oplus; {x}</span> &mdash; this toggles the parity of the size,
+    so it is a bijection between even and odd subsets.<br>
+    Hence exactly half of all subsets are even: <span class="f">2&#8309;/2 = 16</span>. (True for any non-empty finite set.)`},
+
+{t:"set",type:"mc",hard:true,
+ q:`Which identity is <b>false</b> in general?`,
+ c:[`<span class="f">P(A &times; B) = P(A) &times; P(B)</span>`,
+    `<span class="f">A &minus; (B &cup; C) = (A &minus; B) &cap; (A &minus; C)</span>`,
+    `<span class="f">A &times; (B &cap; C) = (A &times; B) &cap; (A &times; C)</span>`,
+    `<span class="f">A &oplus; (B &oplus; C) = (A &oplus; B) &oplus; C</span>`],
+ a:0,
+ s:`<b>False:</b> a member of <span class="f">P(A &times; B)</span> is a <em>set of pairs</em>, while a member of <span class="f">P(A) &times; P(B)</span> is a <em>pair of sets</em> &mdash; different objects.
+    With <span class="f">|A| = |B| = 1</span> the sizes already differ: <span class="f">2&sup1; = 2</span> versus <span class="f">2 &times; 2 = 4</span>.<br>
+    The second is De Morgan for set difference; the third is distribution of <span class="f">&times;</span> over <span class="f">&cap;</span>;
+    the fourth is associativity of symmetric difference (it is XOR on indicator functions). All three are true.`},
+
+{t:"set",type:"int",hard:false,
+ q:`In a group of 200 students: 120 use Python, 90 use Java, 70 use C;
+    40 use both Python and Java, 30 use both Java and C, 35 use both Python and C, and 15 use all three.<br>
+    How many use <b>none</b> of the three languages?`,
+ a:10,
+ s:`Inclusion&ndash;exclusion for three sets:<br>
+    <span class="f">|P &cup; J &cup; C| = 120 + 90 + 70 &minus; 40 &minus; 30 &minus; 35 + 15 = 190</span>.<br>
+    None of them: <span class="f">200 &minus; 190 = 10</span>.<br>
+    Note the pairwise counts already include the triple overlap, which is why it is added back exactly once.`},
+
+{t:"set",type:"int",hard:true,
+ q:`How many elements does <span class="f">P(P(P(&empty;)))</span> have?`,
+ a:4,
+ s:`Work outward one layer at a time:<br>
+    <span class="f">P(&empty;) = {&empty;}</span> &rArr; 1 element.<br>
+    <span class="f">P({&empty;}) = {&empty;, {&empty;}}</span> &rArr; 2 elements.<br>
+    <span class="f">P(P(P(&empty;)))</span> is the power set of a 2-element set &rArr; <span class="f">2&sup2; = 4</span>.`},
+
+{t:"set",type:"mc",hard:true,
+ q:`Which statement is <b>false</b>?`,
+ c:[`<span class="f">|P(P(&empty;))| = 1</span>`,
+    `<span class="f">&empty; &sube; &empty;</span>`,
+    `<span class="f">&empty; &isin; P(&empty;)</span>`,
+    `<span class="f">{&empty;} &sube; P(&empty;)</span>`],
+ a:0,
+ s:`<b>False:</b> <span class="f">P(&empty;) = {&empty;}</span> has one element, so <span class="f">P(P(&empty;)) = {&empty;, {&empty;}}</span> has <b>2</b>, not 1.<br>
+    <b>True:</b> every set is a subset of itself, <span class="f">&empty;</span> included.<br>
+    <b>True:</b> <span class="f">&empty;</span> is a subset of <span class="f">&empty;</span>, hence a member of its power set.<br>
+    <b>True:</b> <span class="f">{&empty;} &sube; {&empty;}</span> since its only element <span class="f">&empty;</span> lies in <span class="f">P(&empty;)</span>.<br>
+    Keep <span class="f">&isin;</span> and <span class="f">&sube;</span> strictly apart here.`},
+
+{t:"set",type:"int",hard:true,
+ q:`Let <span class="f">|A| = 3</span> and <span class="f">|B| = 4</span>.<br>
+    How many subsets of <span class="f">A &times; B</span> are (the graphs of) functions from A to B?`,
+ a:64,
+ s:`A subset of <span class="f">A &times; B</span> is a function iff every element of A appears as the first coordinate <b>exactly once</b>.<br>
+    So the choice is independent for each of the 3 elements of A, with 4 options each &rArr; <span class="f">4&sup3; = 64</span>.<br>
+    (For contrast, <span class="f">A &times; B</span> has 12 pairs and <span class="f">2&sup1;&sup2; = 4096</span> subsets in total &mdash; only 64 of them are functions.)`},
+
+/* ==================== FUNCTIONS (11) ==================== */
+{t:"func",type:"mc",hard:false,
+ q:`Classify <span class="f">f : &#8477; &rarr; &#8477;</span> given by <span class="f">f(x) = x&sup3; &minus; x</span>.`,
+ c:[`Onto but not one-to-one`,`One-to-one but not onto`,`Both one-to-one and onto`,`Neither one-to-one nor onto`],
+ a:0,
+ s:`<b>Not injective:</b> <span class="f">f(&minus;1) = f(0) = f(1) = 0</span>.<br>
+    <b>Surjective:</b> f is continuous with <span class="f">f(x) &rarr; &plusmn;&infin;</span> as <span class="f">x &rarr; &plusmn;&infin;</span>,
+    so by the intermediate value theorem it attains every real value.<br>
+    &rArr; <b>onto but not one-to-one</b>.`},
+
+{t:"func",type:"mc",hard:true,
+ q:`Which of these is a <b>bijection</b> from <span class="f">&#8484;</span> to <span class="f">&#8484;</span>?`,
+ c:[`<span class="f">f(n) = n + (&minus;1)&#8319;</span>`,
+    `<span class="f">f(n) = 2n</span>`,
+    `<span class="f">f(n) = n&sup3;</span>`,
+    `<span class="f">f(n) = &lfloor;n / 2&rfloor;</span>`],
+ a:0,
+ s:`<b><span class="f">n + (&minus;1)&#8319;</span>:</b> even n maps to <span class="f">n+1</span>, odd n to <span class="f">n&minus;1</span>.
+    It swaps the pairs <span class="f">(0,1), (2,3), (&minus;2,&minus;1), &hellip;</span>, covering &#8484; exactly once &mdash; it is its own inverse.<br>
+    <span class="f">2n</span>: injective, not surjective (3 is unreachable).<br>
+    <span class="f">n&sup3;</span>: injective, not surjective over &#8484; (2 is unreachable).<br>
+    <span class="f">&lfloor;n/2&rfloor;</span>: surjective, not injective (<span class="f">f(2) = f(3) = 1</span>).`},
+
+{t:"func",type:"int",hard:true,
+ q:`Let <span class="f">f(x) = &lfloor;x / 2&rfloor; + &lceil;x / 3&rceil;</span>. Find <span class="f">f(11) + f(&minus;4)</span>.`,
+ a:6,
+ s:`<span class="f">f(11) = &lfloor;5.5&rfloor; + &lceil;3.67&rceil; = 5 + 4 = 9</span>.<br>
+    <span class="f">f(&minus;4) = &lfloor;&minus;2&rfloor; + &lceil;&minus;1.33&rceil; = &minus;2 + (&minus;1) = &minus;3</span>.<br>
+    <span class="f">9 + (&minus;3) = 6</span>.<br>
+    The usual slip: <span class="f">&lceil;&minus;1.33&rceil; = &minus;1</span>, since rounding up moves toward zero for negatives.`},
+
+{t:"func",type:"int",hard:false,
+ q:`Let <span class="f">f(x) = 2x&sup2;</span> and <span class="f">g(x) = x + 3</span> be functions from <span class="f">&#8477;&#8314;</span> to <span class="f">&#8477;&#8314;</span>.<br>
+    Find <span class="f">g&#8315;&sup1;(f&#8315;&sup1;(32))</span>.`,
+ a:1,
+ s:`<span class="f">f&#8315;&sup1;(32)</span>: solve <span class="f">2x&sup2; = 32 &rArr; x&sup2; = 16 &rArr; x = 4</span> (positive root, since the domain is <span class="f">&#8477;&#8314;</span>).<br>
+    <span class="f">g&#8315;&sup1;(4)</span>: solve <span class="f">x + 3 = 4 &rArr; x = 1</span>.<br>
+    Answer: <b>1</b>.`},
+
+{t:"func",type:"int",hard:true,
+ q:`Let <span class="f">|A| = 4</span> and <span class="f">|B| = 3</span>. How many <b>onto</b> functions <span class="f">f : A &rarr; B</span> are there?`,
+ a:36,
+ s:`Inclusion&ndash;exclusion over the elements of B that get missed:<br>
+    All functions: <span class="f">3&#8308; = 81</span>.<br>
+    Subtract those missing at least one target: <span class="f">C(3,1) &times; 2&#8308; = 3 &times; 16 = 48</span>.<br>
+    Add back those missing two (subtracted twice): <span class="f">C(3,2) &times; 1&#8308; = 3</span>.<br>
+    <span class="f">81 &minus; 48 + 3 = 36</span>.`},
+
+{t:"func",type:"mc",hard:true,
+ q:`Let <span class="f">f : A &rarr; B</span> and <span class="f">g : B &rarr; C</span>, and suppose <span class="f">g &compfn; f</span> is one-to-one.<br>
+    What must be true?`,
+ c:[`<span class="f">f</span> is one-to-one`,
+    `<span class="f">g</span> is one-to-one`,
+    `both <span class="f">f</span> and <span class="f">g</span> are one-to-one`,
+    `<span class="f">g</span> is onto`],
+ a:0,
+ s:`Suppose <span class="f">f(x&#8321;) = f(x&#8322;)</span>. Applying g gives <span class="f">(g &compfn; f)(x&#8321;) = (g &compfn; f)(x&#8322;)</span>,
+    and injectivity of the composite forces <span class="f">x&#8321; = x&#8322;</span>. So <b>f is injective</b>.<br>
+    <b>g need not be:</b> take <span class="f">A = {1}, B = {1,2}, C = {1}</span>, <span class="f">f(1) = 1</span>, <span class="f">g(1) = g(2) = 1</span>.
+    The composite is injective on a one-element domain, yet g is not.<br>
+    The dual fact: if <span class="f">g &compfn; f</span> is onto, then <span class="f">g</span> must be onto.`},
+
+{t:"func",type:"mc",hard:true,
+ q:`Which function is a bijection from <span class="f">&#8477;</span> to <span class="f">&#8477;</span>?`,
+ c:[`<span class="f">f(x) = x&sup3; + 1</span>`,
+    `<span class="f">f(x) = x&sup2; + x</span>`,
+    `<span class="f">f(x) = e&#8309;</span>`,
+    `<span class="f">f(x) = x / (1 + |x|)</span>`],
+ a:0,
+ s:`<span class="f">x&sup3; + 1</span> is strictly increasing (so injective) and unbounded in both directions (so surjective onto &#8477;) &rArr; bijection, with inverse <span class="f">&#8731;(x &minus; 1)</span>.<br>
+    <span class="f">x&sup2; + x</span> is a parabola: not injective, and bounded below by <span class="f">&minus;1/4</span>, so not onto.<br>
+    <span class="f">e&#8309;</span> is injective but its range is <span class="f">(0, &infin;)</span>, not all of &#8477;.<br>
+    <span class="f">x/(1+|x|)</span> is injective but its range is <span class="f">(&minus;1, 1)</span> &mdash; a bijection onto that interval, not onto &#8477;.`},
+
+{t:"func",type:"int",hard:true,
+ q:`Let <span class="f">|A| = 5</span> and <span class="f">|B| = 3</span>.<br>
+    How many functions <span class="f">f : A &rarr; B</span> are <b>not</b> onto?`,
+ a:93,
+ s:`All functions: <span class="f">3&#8309; = 243</span>.<br>
+    Onto functions: <span class="f">3&#8309; &minus; C(3,1)&middot;2&#8309; + C(3,2)&middot;1&#8309; = 243 &minus; 96 + 3 = 150</span>.<br>
+    Not onto: <span class="f">243 &minus; 150 = 93</span>.`},
+
+{t:"func",type:"int",hard:true,
+ q:`Evaluate <span class="f">&lfloor; &lceil;2.5&rceil; &middot; &lfloor;&minus;3.5&rfloor; / 2 &rfloor;</span>.`,
+ a:-6,
+ s:`<span class="f">&lceil;2.5&rceil; = 3</span> and <span class="f">&lfloor;&minus;3.5&rfloor; = &minus;4</span> (floor rounds <em>down</em>, i.e. away from zero for negatives).<br>
+    <span class="f">3 &times; (&minus;4) = &minus;12</span>, then <span class="f">&minus;12 / 2 = &minus;6</span>, and <span class="f">&lfloor;&minus;6&rfloor; = &minus;6</span>.<br>
+    Answer: <b>&minus;6</b>. Getting <span class="f">&minus;3</span> for the floor is the classic sign error.`},
+
+{t:"func",type:"int",hard:false,
+ q:`Let <span class="f">f(x) = 2x + 3</span> and <span class="f">g(x) = x&sup2;</span> on <span class="f">&#8477;</span>.<br>
+    Find <span class="f">(f &compfn; g)(1) &minus; (g &compfn; f)(1)</span>.`,
+ a:-20,
+ s:`<span class="f">(f &compfn; g)(1) = f(g(1)) = f(1) = 5</span>.<br>
+    <span class="f">(g &compfn; f)(1) = g(f(1)) = g(5) = 25</span>.<br>
+    <span class="f">5 &minus; 25 = &minus;20</span> &mdash; a concrete reminder that composition is not commutative.`},
+
+{t:"func",type:"int",hard:false,
+ q:`Let <span class="f">|A| = |B| = 5</span>. How many bijections <span class="f">f : A &rarr; B</span> are there?`,
+ a:120,
+ s:`A bijection between finite sets of equal size is a matching with no repeats: 5 choices for the image of the first element, 4 for the next, and so on.<br>
+    <span class="f">5! = 120</span>.<br>
+    (Between finite sets of equal size, injective, surjective and bijective all coincide &mdash; which is exactly the pigeonhole principle.)`},
+
+/* ==================== RELATIONS (11) ==================== */
+{t:"rel",type:"int",hard:true,
+ q:`Let A be a set with 3 elements. How many relations on A are <b>antisymmetric</b>?`,
+ a:216,
+ s:`Split the <span class="f">3&sup2; = 9</span> possible pairs into two independent groups.<br>
+    <b>Diagonal pairs</b> <span class="f">(a,a)</span>, 3 of them: antisymmetry never restricts these &rArr; <span class="f">2&sup3; = 8</span> ways.<br>
+    <b>Off-diagonal pairs</b>, grouped as <span class="f">{(a,b), (b,a)}</span>: there are <span class="f">C(3,2) = 3</span> such groups,
+    each with 3 legal options &mdash; keep <span class="f">(a,b)</span>, keep <span class="f">(b,a)</span>, or keep neither (never both) &rArr; <span class="f">3&sup3; = 27</span>.<br>
+    Total <span class="f">8 &times; 27 = 216</span>.<br>
+    <span class="note">General: <span class="f">2&#8319; &middot; 3^(n(n&minus;1)/2)</span> antisymmetric versus <span class="f">2^(n(n+1)/2)</span> symmetric.</span>`},
+
+{t:"rel",type:"int",hard:true,
+ q:`How many equivalence relations are there on a set of 4 elements?`,
+ a:15,
+ s:`Equivalence relations correspond one-to-one with <b>partitions</b> of the set, so count partitions (the Bell number B&#8324;).<br>
+    By block-size pattern:<br>
+    <span class="f">4</span> &rarr; 1 &middot; <span class="f">3+1</span> &rarr; <span class="f">C(4,1) = 4</span> &middot;
+    <span class="f">2+2</span> &rarr; 3 &middot; <span class="f">2+1+1</span> &rarr; <span class="f">C(4,2) = 6</span> &middot; <span class="f">1+1+1+1</span> &rarr; 1.<br>
+    <span class="f">1 + 4 + 3 + 6 + 1 = 15</span>.`},
+
+{t:"rel",type:"mc",hard:false,
+ q:`On <span class="f">{1,2,3,4}</span>, let <span class="f">R = {(1,3), (2,3), (4,1), (4,4)}</span>.<br>
+    Which properties does R have?`,
+ c:[`Antisymmetric only`,
+    `Antisymmetric and transitive`,
+    `Symmetric and transitive`,
+    `None of the four properties`],
+ a:0,
+ s:`<b>Reflexive?</b> No &mdash; <span class="f">(1,1), (2,2), (3,3)</span> are all missing.<br>
+    <b>Symmetric?</b> No &mdash; <span class="f">(1,3)</span> is present but <span class="f">(3,1)</span> is not.<br>
+    <b>Antisymmetric?</b> Yes &mdash; no pair <span class="f">(a,b)</span> and <span class="f">(b,a)</span> with <span class="f">a &ne; b</span> both appear. (<span class="f">(4,4)</span> is on the diagonal and never violates it.)<br>
+    <b>Transitive?</b> No &mdash; <span class="f">(4,1)</span> and <span class="f">(1,3)</span> are present but <span class="f">(4,3)</span> is not.`},
+
+{t:"rel",type:"mc",hard:false,
+ q:`On <span class="f">{1,2,3,4}</span>, let<br>
+    <span class="f">R = {(1,1),(1,2),(2,1),(2,2),(3,3),(3,4),(4,3),(4,4)}</span>. Which is correct?`,
+ c:[`An equivalence relation, and not antisymmetric`,
+    `Both an equivalence relation and a partial order`,
+    `A partial order but not an equivalence relation`,
+    `Not transitive, so not an equivalence relation`],
+ a:0,
+ s:`<b>Reflexive</b> ✓ all four diagonal pairs are present.<br>
+    <b>Symmetric</b> ✓ every pair has its mirror.<br>
+    <b>Transitive</b> ✓ R is <span class="f">{1,2}&sup2; &cup; {3,4}&sup2;</span>, a union of two disjoint complete blocks &rArr; an equivalence relation with classes <span class="f">{1,2}</span> and <span class="f">{3,4}</span>.<br>
+    <b>Antisymmetric</b> ✗ both <span class="f">(1,2)</span> and <span class="f">(2,1)</span> occur with <span class="f">1 &ne; 2</span>, so it is not a partial order.`},
+
+{t:"rel",type:"int",hard:false,
+ q:`On <span class="f">{1,2,3}</span>, let <span class="f">R = {(1,2), (2,3), (3,1)}</span>.<br>
+    How many ordered pairs does the transitive closure of R contain?`,
+ a:9,
+ s:`R is the cycle <span class="f">1 &rarr; 2 &rarr; 3 &rarr; 1</span>, so every vertex reaches every vertex (including itself, in three steps).<br>
+    <span class="f">R&sup2; = {(1,3), (2,1), (3,2)}</span> and <span class="f">R&sup3; = {(1,1), (2,2), (3,3)}</span>.<br>
+    <span class="f">R* = R &cup; R&sup2; &cup; R&sup3;</span> is all of <span class="f">{1,2,3}&sup2;</span> &rArr; <span class="f">3 &times; 3 = 9</span> pairs.`},
+
+{t:"rel",type:"mc",hard:true,
+ q:`Which statement is <b>correct</b>?`,
+ c:[`The empty relation on a non-empty set A is symmetric, antisymmetric and transitive`,
+    `If R is both symmetric and antisymmetric, then <span class="f">R = &empty;</span>`,
+    `If R is symmetric and transitive, then R must be reflexive`,
+    `Every reflexive relation is transitive`],
+ a:0,
+ s:`<b>Correct:</b> all three properties are conditionals whose hypothesis never fires on the empty relation, so they hold <em>vacuously</em>. It is not reflexive, though, because <span class="f">(a,a)</span> is missing.<br>
+    <b>Wrong:</b> symmetric + antisymmetric only forces R to be a subset of the diagonal, e.g. <span class="f">R = {(1,1)}</span>.<br>
+    <b>Wrong:</b> the classic bogus proof (&ldquo;<span class="f">aRb</span> and <span class="f">bRa</span> give <span class="f">aRa</span>&rdquo;) assumes each a is related to something. <span class="f">R = &empty;</span> on <span class="f">A = {1}</span> is a counterexample.<br>
+    <b>Wrong:</b> <span class="f">{(1,1),(2,2),(3,3),(1,2),(2,3)}</span> is reflexive but misses <span class="f">(1,3)</span>.`},
+
+{t:"rel",type:"int",hard:false,
+ q:`How many relations on a set of 4 elements are <b>reflexive</b>?`,
+ a:4096,
+ s:`A relation is a subset of the <span class="f">4&sup2; = 16</span> ordered pairs.<br>
+    Reflexivity fixes the 4 diagonal pairs as <em>present</em> &mdash; no freedom there.<br>
+    The remaining <span class="f">16 &minus; 4 = 12</span> pairs are free &rArr; <span class="f">2&sup1;&sup2; = 4096</span>.`},
+
+{t:"rel",type:"int",hard:false,
+ q:`On <span class="f">&#8484;</span>, define <span class="f">a R b</span> iff <span class="f">a &equiv; b (mod 5)</span>.<br>
+    R is an equivalence relation &mdash; how many equivalence classes does it have?`,
+ a:5,
+ s:`The class of a is its remainder set <span class="f">[a] = {a + 5k | k &isin; &#8484;}</span>.<br>
+    Two integers are related exactly when they leave the same remainder on division by 5, and the possible remainders are <span class="f">0, 1, 2, 3, 4</span>.<br>
+    These classes are pairwise disjoint and cover <span class="f">&#8484;</span> &rArr; <b>5</b> classes (the partition <span class="f">&#8484;/5&#8484;</span>).`},
+
+{t:"rel",type:"mc",hard:true,
+ q:`On <span class="f">{1, 2, 3, 4, 6, 12}</span>, let <span class="f">a R b</span> mean &ldquo;a divides b&rdquo;. What is R?`,
+ c:[`A partial order but not a total order`,
+    `A total order`,
+    `An equivalence relation`,
+    `Neither a partial order nor an equivalence relation`],
+ a:0,
+ s:`<b>Reflexive</b> ✓ every a divides itself. <b>Antisymmetric</b> ✓ for positive integers, <span class="f">a | b</span> and <span class="f">b | a</span> force <span class="f">a = b</span>.
+    <b>Transitive</b> ✓ <span class="f">a | b</span> and <span class="f">b | c</span> give <span class="f">a | c</span>. So R is a partial order.<br>
+    It is <b>not total</b>: 2 and 3 are incomparable &mdash; neither divides the other.<br>
+    Not an equivalence relation either, since it is not symmetric (<span class="f">2 | 4</span> but <span class="f">4 &#8740; 2</span>).`},
+
+{t:"rel",type:"int",hard:true,
+ q:`On <span class="f">{1,2,3,4}</span>, let <span class="f">R = {(1,2), (2,3), (3,4)}</span>.<br>
+    How many ordered pairs must be <b>added</b> to make R transitive?`,
+ a:3,
+ s:`Transitivity demands a pair for every path of length two or more.<br>
+    Length 2: <span class="f">(1,3)</span> from <span class="f">1&rarr;2&rarr;3</span>, and <span class="f">(2,4)</span> from <span class="f">2&rarr;3&rarr;4</span>.<br>
+    Length 3: <span class="f">(1,4)</span> from <span class="f">1&rarr;2&rarr;3&rarr;4</span>.<br>
+    No further pairs are forced (no cycles, so no diagonal pairs appear) &rArr; add <b>3</b> pairs; the closure has 6.`},
+
+{t:"rel",type:"mc",hard:true,
+ q:`On <span class="f">{1,2,3}</span> let <span class="f">R = {(1,2), (2,3)}</span> and <span class="f">S = {(2,1), (3,2)}</span>.<br>
+    Using <span class="f">S &compfn; R = {(a,c) | &exist;b, (a,b) &isin; R and (b,c) &isin; S}</span>, what is <span class="f">S &compfn; R</span>?`,
+ c:[`<span class="f">{(1,1), (2,2)}</span>`,
+    `<span class="f">{(2,2), (3,3)}</span>`,
+    `<span class="f">{(1,2), (2,3)}</span>`,
+    `<span class="f">&empty;</span>`],
+ a:0,
+ s:`Chase each pair of R through S:<br>
+    <span class="f">(1,2) &isin; R</span> and <span class="f">(2,1) &isin; S</span> &rArr; <span class="f">(1,1)</span>.<br>
+    <span class="f">(2,3) &isin; R</span> and <span class="f">(3,2) &isin; S</span> &rArr; <span class="f">(2,2)</span>.<br>
+    Nothing else matches &rArr; <span class="f">S &compfn; R = {(1,1), (2,2)}</span>.<br>
+    Composing the other way, <span class="f">R &compfn; S = {(2,2), (3,3)}</span> &mdash; composition of relations is not commutative either.`},
+
+/* ==================== METHODS OF PROOF (18) ==================== */
+{t:"proof",type:"mc",hard:false,
+ q:`To prove &ldquo;for every integer n, if <span class="f">n&sup2;</span> is odd then n is odd&rdquo;, what is the most direct approach?`,
+ c:[`Proof by contraposition &mdash; assume n is even and show <span class="f">n&sup2;</span> is even`,
+    `Direct proof &mdash; assume <span class="f">n&sup2; = 2k+1</span> and solve for n`,
+    `Mathematical induction on n`,
+    `Proof by cases on the sign of n`],
+ a:0,
+ s:`The contrapositive of <span class="f">n&sup2; odd &rarr; n odd</span> is <span class="f">n even &rarr; n&sup2; even</span>, which is immediate:<br>
+    let <span class="f">n = 2k</span>; then <span class="f">n&sup2; = 4k&sup2; = 2(2k&sup2;)</span>, which is even. &#8718;<br>
+    Starting from <span class="f">n&sup2; = 2k+1</span> forces you to take a square root and gets you nowhere &mdash; a classic signal to flip to the contrapositive.`},
+
+{t:"proof",type:"mc",hard:false,
+ q:`In a proof by contradiction that <span class="f">&radic;2</span> is irrational, what is the correct opening assumption?`,
+ c:[`Assume <span class="f">&radic;2 = a/b</span> with integers a, b, <span class="f">b &ne; 0</span>, and <span class="f">gcd(a,b) = 1</span>`,
+    `Assume <span class="f">&radic;2</span> is irrational`,
+    `Assume <span class="f">&radic;2 = a/b</span> for arbitrary integers a, b`,
+    `Assume 2 is not a perfect square`],
+ a:0,
+ s:`A proof by contradiction opens with the <b>negation</b> of the goal, i.e. the assumption that <span class="f">&radic;2</span> is rational.<br>
+    The clause <span class="f">gcd(a,b) = 1</span> (lowest terms) is essential: the contradiction reached at the end is &ldquo;a and b are both even&rdquo;,
+    which only contradicts something if the fraction was already reduced.<br>
+    Without it, discovering that a and b are even conflicts with nothing and the proof stalls.`},
+
+{t:"proof",type:"mc",hard:false,
+ q:`In proving <span class="f">&forall;n &ge; 1, P(n)</span> by mathematical induction, what exactly is the inductive step?`,
+ c:[`Assume <span class="f">P(k)</span> for an arbitrary <span class="f">k &ge; 1</span> and prove <span class="f">P(k+1)</span>`,
+    `Prove <span class="f">P(k)</span> for all <span class="f">k &ge; 1</span>, then conclude <span class="f">P(k+1)</span>`,
+    `Assume <span class="f">P(n)</span> holds for all n and show no contradiction arises`,
+    `Prove <span class="f">P(1)</span> and <span class="f">P(2)</span>, then conclude it holds for every n`],
+ a:0,
+ s:`The inductive step proves the <b>implication</b> <span class="f">P(k) &rarr; P(k+1)</span> for an arbitrary fixed k.<br>
+    The assumption <span class="f">P(k)</span> is the inductive hypothesis &mdash; assuming it for <em>all</em> k would be assuming the theorem, which is circular.<br>
+    Checking two base cases proves nothing about large n on its own.`},
+
+{t:"proof",type:"int",hard:true,
+ q:`Find the smallest <span class="f">n&#8320;</span> such that <span class="f">2&#8319; &gt; n&sup2;</span> holds for <b>all</b> integers <span class="f">n &ge; n&#8320;</span>.`,
+ a:5,
+ s:`Check small values:<br>
+    <span class="f">n=1: 2 &gt; 1</span> ✓ &middot; <span class="f">n=2: 4 &gt; 4</span> ✗ &middot; <span class="f">n=3: 8 &gt; 9</span> ✗ &middot; <span class="f">n=4: 16 &gt; 16</span> ✗ &middot; <span class="f">n=5: 32 &gt; 25</span> ✓.<br>
+    <span class="f">n&#8320; = 1</span> fails because the claim must hold for <em>every</em> <span class="f">n &ge; n&#8320;</span>, and n = 2 breaks it.<br>
+    For <span class="f">n &ge; 5</span> induction closes it: if <span class="f">2&#8319; &gt; n&sup2;</span>, then <span class="f">2&#8319;&#8314;&sup1; &gt; 2n&sup2; &ge; (n+1)&sup2;</span>,
+    using <span class="f">n&sup2; &ge; 2n + 1</span> for <span class="f">n &ge; 3</span> &rArr; <b>n&#8320; = 5</b>.`},
+
+{t:"proof",type:"int",hard:false,
+ q:`How many integers must you pick from <span class="f">{1, 2, 3, &hellip;, 20}</span> to <b>guarantee</b> that two of them sum to 21?`,
+ a:11,
+ s:`Pair up the numbers that sum to 21:<br>
+    <span class="f">{1,20}, {2,19}, {3,18}, &hellip;, {10,11}</span> &mdash; <b>10 pairs</b> covering all 20 numbers.<br>
+    You can pick 10 numbers without success (one from each pair, e.g. 1&ndash;10), so 10 is not enough.<br>
+    With 11 picks, the pigeonhole principle forces two into the same pair &rArr; <b>11</b>.`},
+
+{t:"proof",type:"int",hard:true,
+ q:`Someone claims: &ldquo;for every integer <span class="f">n &ge; 1</span>, <span class="f">n&sup2; + n + 41</span> is prime.&rdquo;<br>
+    What is the <b>smallest</b> counterexample?`,
+ a:40,
+ s:`Euler's polynomial really is prime for <span class="f">n = 1</span> through <span class="f">39</span>, which is exactly what makes it convincing.<br>
+    At <span class="f">n = 40</span>: <span class="f">1600 + 40 + 41 = 1681 = 41&sup2;</span> &mdash; composite.<br>
+    Quick way to see it: <span class="f">n&sup2; + n + 41 = n(n+1) + 41</span>, so when <span class="f">n + 1 = 41</span> every term is divisible by 41.<br>
+    Lesson: no amount of case-checking constitutes a proof.`},
+
+{t:"proof",type:"int",hard:false,
+ q:`For how many integers n with <span class="f">1 &le; n &le; 30</span> is <span class="f">n&sup2; &equiv; 1 (mod 3)</span>?`,
+ a:20,
+ s:`Proof by cases on <span class="f">n mod 3</span>:<br>
+    <span class="f">n &equiv; 0 &rArr; n&sup2; &equiv; 0</span> &middot;
+    <span class="f">n &equiv; 1 &rArr; n&sup2; &equiv; 1</span> ✓ &middot;
+    <span class="f">n &equiv; 2 &rArr; n&sup2; &equiv; 4 &equiv; 1</span> ✓.<br>
+    So <span class="f">n&sup2; &equiv; 1 (mod 3)</span> exactly when 3 does not divide n.<br>
+    From 1 to 30 there are 10 multiples of 3 &rArr; <span class="f">30 &minus; 10 = 20</span>.`},
+
+{t:"proof",type:"int",hard:true,
+ q:`What is the largest positive integer d that divides <span class="f">n&sup3; &minus; n</span> for <b>every</b> integer n?`,
+ a:6,
+ s:`Factor: <span class="f">n&sup3; &minus; n = (n&minus;1)&middot;n&middot;(n+1)</span>, the product of three consecutive integers.<br>
+    Among any three consecutive integers at least one is even &rArr; divisible by 2.<br>
+    Exactly one is a multiple of 3 &rArr; divisible by 3.<br>
+    Since <span class="f">gcd(2,3) = 1</span>, the product is always divisible by 6.<br>
+    Nothing larger works: at <span class="f">n = 2</span> the value is exactly <span class="f">6</span> &rArr; <b>d = 6</b>.`},
+
+{t:"proof",type:"int",hard:true,
+ q:`Define <span class="f">f(1) = 1</span>, <span class="f">f(2) = 2</span>, and <span class="f">f(n) = 2f(n&minus;1) &minus; f(n&minus;2) + 1</span> for <span class="f">n &ge; 3</span>.<br>
+    Find <span class="f">f(6)</span>.`,
+ a:16,
+ s:`<span class="f">f(3) = 2(2) &minus; 1 + 1 = 4</span><br>
+    <span class="f">f(4) = 2(4) &minus; 2 + 1 = 7</span><br>
+    <span class="f">f(5) = 2(7) &minus; 4 + 1 = 11</span><br>
+    <span class="f">f(6) = 2(11) &minus; 7 + 1 = 16</span><br>
+    The successive differences are <span class="f">1, 2, 3, 4, 5</span>, which points to the closed form <span class="f">f(n) = n(n&minus;1)/2 + 1</span> &mdash; provable by induction.`},
+
+{t:"proof",type:"mc",hard:true,
+ q:`&ldquo;If <span class="f">&radic;2<sup>&radic;2</sup></span> is rational we are done, taking <span class="f">x = y = &radic;2</span>.
+    Otherwise take <span class="f">x = &radic;2<sup>&radic;2</sup></span> and <span class="f">y = &radic;2</span>, giving <span class="f">x<sup>y</sup> = 2</span>.
+    Hence irrational x, y exist with <span class="f">x<sup>y</sup></span> rational.&rdquo;<br>What kind of proof is this?`,
+ c:[`A nonconstructive existence proof`,
+    `A constructive existence proof`,
+    `A proof by contradiction`,
+    `Incomplete &mdash; it never determines whether <span class="f">&radic;2<sup>&radic;2</sup></span> is rational`],
+ a:0,
+ s:`It is <b>nonconstructive</b>: it proves a suitable pair <span class="f">(x, y)</span> exists without telling us which one, since we never learn which case holds.<br>
+    The argument is nevertheless <b>logically complete</b> &mdash; it invokes <span class="f">p &or; &not;p</span> (excluded middle) and both branches succeed.
+    Not knowing which branch is the defining feature of the method, not a gap.<br>
+    A constructive proof would have to exhibit an explicit pair.`},
+
+{t:"proof",type:"mc",hard:true,
+ q:`The following &ldquo;proof&rdquo; claims all horses are the same colour. Where does it break?`,
+ given:`<b>Claim:</b> in any set of n horses, all horses have the same colour.<br>
+        <b>Basis:</b> <span class="f">n = 1</span> is clear.<br>
+        <b>Inductive step:</b> assume it holds for <span class="f">n = k</span>. Given <span class="f">k+1</span> horses, drop the last one to get k horses of one colour,
+        then drop the first one to get another k of one colour. The two groups overlap, so all <span class="f">k+1</span> share a colour.`,
+ c:[`The inductive step fails at <span class="f">k = 1</span>, where the two subgroups do not overlap`,
+    `The basis step is wrong; it should start at <span class="f">n = 0</span>`,
+    `Applying the inductive hypothesis to two different subgroups is illegitimate`,
+    `The argument needs strong induction to be valid`],
+ a:0,
+ s:`At <span class="f">k = 1</span> we are looking at 2 horses: dropping the last gives <span class="f">{h&#8321;}</span>, dropping the first gives <span class="f">{h&#8322;}</span>.<br>
+    <b>Those groups share no horse</b>, so the &ldquo;they overlap&rdquo; step collapses and the chain <span class="f">P(1) &rarr; P(2)</span> never closes.<br>
+    Everything else is fine &mdash; for <span class="f">k &ge; 2</span> the reasoning genuinely works, and reusing the hypothesis on two subgroups is perfectly legal.<br>
+    Lesson: the inductive step must hold for <b>every</b> k from the basis onward, not merely for large k.`},
+
+{t:"proof",type:"mc",hard:false,
+ q:`Which statement is the <b>Well-Ordering Principle</b>?`,
+ c:[`Every non-empty set of non-negative integers has a least element`,
+    `Every non-empty set of reals with a lower bound has a least element`,
+    `Every integer factors into primes in exactly one way`,
+    `If <span class="f">P(1)</span> holds and <span class="f">P(k) &rarr; P(k+1)</span>, then <span class="f">P(n)</span> holds for all n`],
+ a:0,
+ s:`<b>Well-ordering:</b> every non-empty subset of <span class="f">&#8469;</span> has a least element.<br>
+    The version about the reals is <b>false</b> &mdash; <span class="f">(0, 1)</span> is bounded below yet has no least element (it has an infimum, not a minimum).<br>
+    The third statement is the fundamental theorem of arithmetic; the fourth is the principle of mathematical induction.<br>
+    Well-ordering and induction are logically equivalent, but they are not the same statement.`},
+
+{t:"proof",type:"mc",hard:false,
+ q:`To show that <span class="f">&forall;x P(x)</span> is <b>false</b>, what must you do?`,
+ c:[`Exhibit a single c with <span class="f">P(c)</span> false`,
+    `Show <span class="f">P(x)</span> is false for every x`,
+    `Show that <span class="f">&exist;x P(x)</span> is false`,
+    `Show <span class="f">P(x)</span> fails for most x in the domain`],
+ a:0,
+ s:`<span class="f">&not;&forall;x P(x) &equiv; &exist;x &not;P(x)</span> &mdash; one <b>counterexample</b> is exactly what is required, and it is enough.<br>
+    Showing P fails everywhere proves <span class="f">&forall;x &not;P(x)</span>, a strictly stronger and different claim.<br>
+    Showing <span class="f">&exist;x P(x)</span> false is stronger still, and unnecessary.`},
+
+{t:"proof",type:"int",hard:false,
+ q:`Induction gives <span class="f">1 + 3 + 5 + &hellip; + (2n&minus;1) = n&sup2;</span>.<br>
+    What is the sum of the first 25 positive odd integers?`,
+ a:625,
+ s:`The identity says the sum of the first n odd numbers is <span class="f">n&sup2;</span>.<br>
+    <span class="f">n = 25 &rArr; 25&sup2; = 625</span>.<br>
+    Sanity check on the inductive step: <span class="f">n&sup2; + (2(n+1) &minus; 1) = n&sup2; + 2n + 1 = (n+1)&sup2;</span> ✓
+    (the 25th odd number is <span class="f">2(25) &minus; 1 = 49</span>).`},
+
+{t:"proof",type:"mc",hard:true,
+ q:`To prove the biconditional &ldquo;n is even <b>if and only if</b> <span class="f">n&sup2;</span> is even&rdquo;, which pair of arguments suffices?`,
+ c:[`A direct proof of &ldquo;n even &rarr; <span class="f">n&sup2;</span> even&rdquo;, plus a contrapositive proof of &ldquo;<span class="f">n&sup2;</span> even &rarr; n even&rdquo;`,
+    `A direct proof of &ldquo;n even &rarr; <span class="f">n&sup2;</span> even&rdquo; alone, since <span class="f">&harr;</span> is symmetric`,
+    `A proof by contradiction of &ldquo;n even &rarr; <span class="f">n&sup2;</span> even&rdquo;, plus a counterexample for the converse`,
+    `Induction on n covering both directions at once`],
+ a:0,
+ s:`A biconditional needs <b>both</b> implications.<br>
+    &rarr; direction: <span class="f">n = 2k &rArr; n&sup2; = 2(2k&sup2;)</span>, direct and easy.<br>
+    &larr; direction: prove it by contraposition &mdash; <span class="f">n odd &rArr; n = 2k+1 &rArr; n&sup2; = 2(2k&sup2;+2k) + 1</span> is odd.<br>
+    One direction alone never establishes <span class="f">&harr;</span>, and a counterexample would <em>disprove</em> the converse rather than prove it.`},
+
+{t:"proof",type:"int",hard:false,
+ q:`How many people are needed to <b>guarantee</b> that at least 4 of them were born in the same month?`,
+ a:37,
+ s:`Generalised pigeonhole: with <span class="f">N</span> objects in <span class="f">k</span> boxes some box holds at least <span class="f">&lceil;N/k&rceil;</span> objects.<br>
+    We need <span class="f">&lceil;N/12&rceil; &ge; 4</span>, i.e. <span class="f">N &gt; 36</span>.<br>
+    36 people can be spread as 3 per month with no month reaching 4, so 36 is not enough &rArr; <span class="f">3 &times; 12 + 1 = 37</span>.`},
+
+{t:"proof",type:"mc",hard:true,
+ q:`What is the cleanest way to prove &ldquo;if x is irrational, then <span class="f">1/x</span> is irrational&rdquo; (for <span class="f">x &ne; 0</span>)?`,
+ c:[`Contraposition &mdash; assume <span class="f">1/x</span> is rational and deduce x is rational`,
+    `Direct proof &mdash; write x as a non-repeating decimal and invert it`,
+    `Induction on the digits of x`,
+    `Exhibit an irrational x for which <span class="f">1/x</span> is irrational`],
+ a:0,
+ s:`Contraposition turns an awkward hypothesis (&ldquo;x cannot be written as a fraction&rdquo;) into a usable one.<br>
+    Assume <span class="f">1/x = a/b</span> with integers <span class="f">a, b &ne; 0</span>. Then <span class="f">x = b/a</span> is rational, contradicting nothing &mdash; it simply proves the contrapositive. &#8718;<br>
+    Note <span class="f">a &ne; 0</span> because <span class="f">1/x &ne; 0</span>.<br>
+    A single example proves an existential statement, never a universal one.`},
+
+{t:"proof",type:"int",hard:true,
+ q:`A staircase has 8 steps and you may climb 1 or 2 steps at a time.<br>
+    In how many different ways can you reach the top?`,
+ a:34,
+ s:`Let <span class="f">f(n)</span> be the number of ways to climb n steps. The last move is either 1 step (from <span class="f">n&minus;1</span>) or 2 steps (from <span class="f">n&minus;2</span>),
+    giving <span class="f">f(n) = f(n&minus;1) + f(n&minus;2)</span> &mdash; the Fibonacci recurrence.<br>
+    With <span class="f">f(1) = 1</span> and <span class="f">f(2) = 2</span>:<br>
+    <span class="f">f(3)=3, f(4)=5, f(5)=8, f(6)=13, f(7)=21, f(8)=34</span> &rArr; <b>34</b>.<br>
+    Strong induction justifies the recurrence: each climb is counted exactly once by its final move.`},
+
+/* ==================== TRANSLATION & FORMALIZATION (15) ==================== */
+{t:"trans",type:"expr",hard:false,vars:["p","q","r"],
+ q:`Translate into a propositional formula:<br>
+    <em>&ldquo;Roses are red and violets are blue, <b>only if</b> you like flowers.&rdquo;</em>`,
+ given:`<span class="f">p</span>: Roses are red &middot; <span class="f">q</span>: Violets are blue &middot; <span class="f">r</span>: You like flowers`,
+ a:"(p ∧ q) → r",
+ s:`&ldquo;<b>A only if B</b>&rdquo; means A cannot happen without B, i.e. <span class="f">A &rarr; B</span>.<br>
+    Here A is the conjunction <span class="f">p &and; q</span> and B is <span class="f">r</span>, giving <span class="f">(p &and; q) &rarr; r</span>.<br>
+    The trap is reading &ldquo;only if&rdquo; as &ldquo;if&rdquo;, which would give the converse <span class="f">r &rarr; (p &and; q)</span>.<br>
+    Equivalent accepted forms: <span class="f">&not;(p &and; q) &or; r</span>, <span class="f">&not;p &or; &not;q &or; r</span>.`},
+
+{t:"trans",type:"expr",hard:true,vars:["a","c","f"],
+ q:`Translate into a propositional formula:<br>
+    <em>&ldquo;You can access the internet from campus <b>only if</b> you are a computer science major <b>or</b> you are <b>not</b> a freshman.&rdquo;</em>`,
+ given:`<span class="f">a</span>: You can access the internet from campus &middot; <span class="f">c</span>: You are a CS major &middot; <span class="f">f</span>: You are a freshman`,
+ a:"a → (c ∨ ¬f)",
+ s:`&ldquo;A only if B&rdquo; &rArr; <span class="f">a &rarr; (&hellip;)</span>, and the condition B is the disjunction <span class="f">c &or; &not;f</span>.<br>
+    Result: <span class="f">a &rarr; (c &or; &not;f)</span>.<br>
+    Two frequent errors: flipping the arrow, and negating the whole disjunction instead of just <span class="f">f</span>.`},
+
+{t:"trans",type:"expr",hard:false,vars:["l","v"],
+ q:`Translate into a propositional formula:<br>
+    <em>&ldquo;Having a valid password is <b>necessary</b> for logging on to the server.&rdquo;</em>`,
+ given:`<span class="f">l</span>: You log on to the server &middot; <span class="f">v</span>: You have a valid password`,
+ a:"l → v",
+ s:`&ldquo;B is <b>necessary</b> for A&rdquo; puts B in the <em>consequent</em>: <span class="f">A &rarr; B</span>, i.e. <span class="f">l &rarr; v</span>.<br>
+    &ldquo;B is <b>sufficient</b> for A&rdquo; is the other way round: <span class="f">B &rarr; A</span>.<br>
+    Reading it as <span class="f">v &rarr; l</span> would claim that any valid password gets you logged on, which the sentence does not say.`},
+
+{t:"trans",type:"expr",hard:true,vars:["g","s"],
+ q:`Translate into a propositional formula:<br>
+    <em>&ldquo;You will get an A <b>unless</b> you skip the final exam.&rdquo;</em>`,
+ given:`<span class="f">g</span>: You get an A &middot; <span class="f">s</span>: You skip the final exam`,
+ a:"¬s → g",
+ s:`&ldquo;A <b>unless</b> B&rdquo; is standardly read as <span class="f">&not;B &rarr; A</span> &mdash; if B does not happen, A does.<br>
+    So the answer is <span class="f">&not;s &rarr; g</span>, which is logically equivalent to <span class="f">g &or; s</span> (also accepted).<br>
+    Note it does <em>not</em> promise failure if you do skip; that stronger reading would be <span class="f">g &harr; &not;s</span>.`},
+
+{t:"trans",type:"expr",hard:false,vars:["p","s"],
+ q:`Translate into a propositional formula:<br>
+    <em>&ldquo;<b>Neither</b> the printer <b>nor</b> the scanner is working.&rdquo;</em>`,
+ given:`<span class="f">p</span>: The printer is working &middot; <span class="f">s</span>: The scanner is working`,
+ a:"¬p ∧ ¬s",
+ s:`&ldquo;Neither A nor B&rdquo; denies both: <span class="f">&not;p &and; &not;s</span>.<br>
+    By De Morgan this equals <span class="f">&not;(p &or; s)</span> &mdash; also accepted.<br>
+    Careful: <span class="f">&not;(p &and; s)</span> only says they are not <em>both</em> working, which is much weaker.`},
+
+{t:"trans",type:"expr",hard:false,vars:["j","i","e"],
+ q:`Translate into a propositional formula:<br>
+    <em>&ldquo;You get the job <b>if and only if</b> you pass the interview <b>and</b> you have experience.&rdquo;</em>`,
+ given:`<span class="f">j</span>: You get the job &middot; <span class="f">i</span>: You pass the interview &middot; <span class="f">e</span>: You have experience`,
+ a:"j ↔ (i ∧ e)",
+ s:`&ldquo;if and only if&rdquo; is the biconditional, and the whole conjunction sits on its right: <span class="f">j &harr; (i &and; e)</span>.<br>
+    Grouping matters &mdash; <span class="f">(j &harr; i) &and; e</span> is a different claim, asserting outright that you have experience.`},
+
+{t:"trans",type:"expr",hard:false,vars:["s","p"],
+ q:`Write the <b>negation</b> of &ldquo;If you study, then you pass&rdquo; as a propositional formula.`,
+ given:`<span class="f">s</span>: You study &middot; <span class="f">p</span>: You pass`,
+ a:"s ∧ ¬p",
+ s:`The sentence is <span class="f">s &rarr; p</span>, and <span class="f">&not;(A &rarr; B) &equiv; A &and; &not;B</span>.<br>
+    So the negation is <span class="f">s &and; &not;p</span> &mdash; &ldquo;you study and you still do not pass&rdquo;.<br>
+    A negated conditional is a <em>conjunction</em>, never another conditional: <span class="f">s &rarr; &not;p</span> is a common wrong answer.`},
+
+{t:"trans",type:"expr",hard:false,vars:["p","q","r"],
+ q:`Write the <b>converse</b> of <span class="f">(p &and; q) &rarr; r</span> as a formula.`,
+ a:"r → (p ∧ q)",
+ s:`The converse swaps hypothesis and conclusion: <span class="f">r &rarr; (p &and; q)</span>.<br>
+    For reference on the same statement: contrapositive <span class="f">&not;r &rarr; (&not;p &or; &not;q)</span>, inverse <span class="f">(&not;p &or; &not;q) &rarr; &not;r</span>.<br>
+    Only the contrapositive is logically equivalent to the original.`},
+
+{t:"trans",type:"expr",hard:false,vars:["p","q"],
+ q:`Write a formula expressing &ldquo;<b>exactly one</b> of <span class="f">p</span> and <span class="f">q</span> is true&rdquo;.`,
+ a:"p ⊕ q",
+ s:`This is exclusive or: <span class="f">p &oplus; q</span>.<br>
+    Equivalent spellings, all accepted: <span class="f">(p &or; q) &and; &not;(p &and; q)</span>, <span class="f">(p &and; &not;q) &or; (&not;p &and; q)</span>, and <span class="f">&not;(p &harr; q)</span>.<br>
+    Plain <span class="f">p &or; q</span> is inclusive and also allows both to be true.`},
+
+{t:"trans",type:"expr",hard:true,vars:["p","q","r"],
+ q:`Translate into a propositional formula:<br>
+    <em>&ldquo;<span class="f">p</span> is <b>sufficient</b> for <span class="f">q</span>, and <span class="f">q</span> is <b>necessary</b> for <span class="f">r</span>.&rdquo;</em>`,
+ a:"(p → q) ∧ (r → q)",
+ s:`&ldquo;p is sufficient for q&rdquo; &rArr; <span class="f">p &rarr; q</span>.<br>
+    &ldquo;q is necessary for r&rdquo; &rArr; <span class="f">r &rarr; q</span> (the necessary condition is the consequent).<br>
+    Join them: <span class="f">(p &rarr; q) &and; (r &rarr; q)</span>. Note both arrows point <em>into</em> q, which is the whole point of the sufficient/necessary contrast.`},
+
+{t:"trans",type:"expr",hard:true,vars:["a","d"],
+ q:`Translate into a propositional formula:<br>
+    <em>&ldquo;It is not the case that if the alarm sounds then the door is locked.&rdquo;</em>`,
+ given:`<span class="f">a</span>: The alarm sounds &middot; <span class="f">d</span>: The door is locked`,
+ a:"¬(a → d)",
+ s:`Literally: <span class="f">&not;(a &rarr; d)</span>.<br>
+    Simplifying, <span class="f">&not;(a &rarr; d) &equiv; a &and; &not;d</span> &mdash; the alarm sounds <em>and</em> the door is not locked. Both forms are accepted.<br>
+    This shows a negated conditional is a strong claim: it asserts the hypothesis outright.`},
+
+{t:"trans",type:"int",hard:false,
+ q:`How many of the following five sentences are <b>propositions</b>?`,
+ given:`<ol>
+   <li>Do you want to build a snowman?</li>
+   <li>The sun is bigger than the moon.</li>
+   <li>x is greater than y.</li>
+   <li>For every integer x, <span class="f">x = &radic;x + 1</span>.</li>
+   <li>Some DS TAs think this quiz is easy.</li>
+ </ol>`,
+ a:3,
+ s:`A proposition is a declarative sentence with a definite truth value.<br>
+    (1) <b>No</b> &mdash; a question, not declarative.<br>
+    (2) <b>Yes</b> &mdash; declarative and true.<br>
+    (3) <b>No</b> &mdash; an open sentence; its truth depends on the free variables x and y.<br>
+    (4) <b>Yes</b> &mdash; the quantifier <em>binds</em> x, so the sentence is closed and has a definite value (false).<br>
+    (5) <b>Yes</b> &mdash; declarative with a definite, if unknown to us, truth value.<br>
+    &rArr; <b>3</b>. The key contrast is (3) versus (4): quantifying a free variable turns a predicate into a proposition.`},
+
+{t:"trans",type:"mc",hard:false,
+ q:`Translate &ldquo;Every student in this class has visited Mexico&rdquo;, where the domain is all people.`,
+ given:`<span class="f">S(x)</span>: x is a student in this class &middot; <span class="f">M(x)</span>: x has visited Mexico`,
+ c:[`<span class="f">&forall;x (S(x) &rarr; M(x))</span>`,
+    `<span class="f">&forall;x (S(x) &and; M(x))</span>`,
+    `<span class="f">&exist;x (S(x) &rarr; M(x))</span>`,
+    `<span class="f">&forall;x (M(x) &rarr; S(x))</span>`],
+ a:0,
+ s:`With an unrestricted domain, a universal claim about a subgroup uses an <b>implication</b>: <span class="f">&forall;x (S(x) &rarr; M(x))</span>.<br>
+    <span class="f">&forall;x (S(x) &and; M(x))</span> would say <em>everyone in the world</em> is a student in this class who has visited Mexico &mdash; far too strong.<br>
+    The last option reverses the roles, claiming every Mexico-visitor is in this class.<br>
+    Rule of thumb: <span class="f">&forall;</span> pairs with <span class="f">&rarr;</span>, <span class="f">&exist;</span> pairs with <span class="f">&and;</span>.`},
+
+{t:"trans",type:"mc",hard:true,
+ q:`Translate &ldquo;Some student in this class has visited every country&rdquo;, domain all people and all places.`,
+ given:`<span class="f">S(x)</span>: x is a student in this class &middot; <span class="f">C(y)</span>: y is a country &middot; <span class="f">V(x,y)</span>: x has visited y`,
+ c:[`<span class="f">&exist;x (S(x) &and; &forall;y (C(y) &rarr; V(x,y)))</span>`,
+    `<span class="f">&exist;x (S(x) &rarr; &forall;y (C(y) &and; V(x,y)))</span>`,
+    `<span class="f">&forall;y (C(y) &rarr; &exist;x (S(x) &and; V(x,y)))</span>`,
+    `<span class="f">&exist;x &exist;y (S(x) &and; C(y) &and; V(x,y))</span>`],
+ a:0,
+ s:`&ldquo;Some student&rdquo; &rArr; <span class="f">&exist;x (S(x) &and; &hellip;)</span>; &ldquo;every country&rdquo; &rArr; <span class="f">&forall;y (C(y) &rarr; &hellip;)</span>.<br>
+    Combined: <span class="f">&exist;x (S(x) &and; &forall;y (C(y) &rarr; V(x,y)))</span>.<br>
+    Option 3 is the weaker statement &ldquo;every country has been visited by <em>some</em> student&rdquo; &mdash; the student may differ per country.<br>
+    Option 4 only says some student visited <em>some</em> country.`},
+
+{t:"trans",type:"mc",hard:false,
+ q:`&ldquo;No one is perfect&rdquo;, with <span class="f">P(x)</span>: x is perfect over the domain of all people. Which rendering is correct?`,
+ c:[`<span class="f">&not;&exist;x P(x)</span>, equivalently <span class="f">&forall;x &not;P(x)</span>`,
+    `<span class="f">&exist;x &not;P(x)</span>, equivalently <span class="f">&not;&forall;x P(x)</span>`,
+    `<span class="f">&not;&forall;x P(x)</span>, equivalently <span class="f">&forall;x &not;P(x)</span>`,
+    `<span class="f">&forall;x &not;P(x)</span>, equivalently <span class="f">&not;&forall;x P(x)</span>`],
+ a:0,
+ s:`&ldquo;No one is perfect&rdquo; denies the existence of a perfect person: <span class="f">&not;&exist;x P(x)</span>.<br>
+    De Morgan for quantifiers gives <span class="f">&not;&exist;x P(x) &equiv; &forall;x &not;P(x)</span> &mdash; the correct pairing.<br>
+    <span class="f">&not;&forall;x P(x) &equiv; &exist;x &not;P(x)</span> is the <em>weaker</em> &ldquo;<b>not everyone</b> is perfect&rdquo;, which the other options mismatch.`},
+
+/* ==================== ADDITIONAL ITEMS ==================== */
+{t:"prop",type:"int",hard:true,
+ q:`How many of the 8 rows for <span class="f">p, q, r</span> satisfy
+    <span class="f">(p &or; q &or; r) &and; (&not;p &or; &not;q) &and; (&not;q &or; &not;r)</span>?`,
+ a:4,
+ s:`The clauses say: at least one variable is true, p and q are not both true, q and r are not both true.<br>
+    If <span class="f">q = T</span>, then p and r must both be F &rArr; <span class="f">FTF</span> works (1 row).<br>
+    If <span class="f">q = F</span>, the last two clauses are automatic and we only need <span class="f">p &or; r</span> &rArr;
+    <span class="f">TFF, FFT, TFT</span> (3 rows).<br>
+    Total <span class="f">1 + 3 = 4</span>.`},
+
+{t:"prop",type:"mc",hard:true,
+ q:`What is the <b>dual</b> of <span class="f">(p &or; q) &and; (&not;p &or; r)</span>?`,
+ c:[`<span class="f">(p &and; q) &or; (&not;p &and; r)</span>`,
+    `<span class="f">(&not;p &and; &not;q) &or; (p &and; &not;r)</span>`,
+    `<span class="f">(&not;p &or; &not;q) &and; (p &or; &not;r)</span>`,
+    `<span class="f">(p &or; q) &and; (&not;p &or; r)</span>`],
+ a:0,
+ s:`The dual swaps <span class="f">&and; &harr; &or;</span> and <span class="f">T &harr; F</span>, and leaves negations of variables alone.<br>
+    <span class="f">(p &or; q) &and; (&not;p &or; r)</span> becomes <span class="f">(p &and; q) &or; (&not;p &and; r)</span>.<br>
+    Option 2 is the <em>negation</em> (De Morgan applied throughout), which also flips each literal &mdash; that is a different operation.`},
+
+{t:"prop",type:"int",hard:false,
+ q:`Over the 4 rows for <span class="f">p, q</span>, how many make <span class="f">(p &rarr; q) &harr; (q &rarr; p)</span> true?`,
+ a:2,
+ s:`The biconditional is true exactly when both implications share a truth value.<br>
+    <span class="f">TT</span>: <span class="f">T &harr; T</span> ✓ &middot; <span class="f">TF</span>: <span class="f">F &harr; T</span> ✗ &middot;
+    <span class="f">FT</span>: <span class="f">T &harr; F</span> ✗ &middot; <span class="f">FF</span>: <span class="f">T &harr; T</span> ✓.<br>
+    &rArr; <b>2</b> rows &mdash; precisely the rows where <span class="f">p</span> and <span class="f">q</span> agree, so the formula is equivalent to <span class="f">p &harr; q</span>.`},
+
+{t:"pred",type:"mc",hard:false,
+ q:`With domain <span class="f">&#8484;</span>, which statement is <b>true</b>?`,
+ c:[`<span class="f">&forall;x &forall;y &exist;z (z = x + y)</span>`,
+    `<span class="f">&exist;z &forall;x &forall;y (z = x + y)</span>`,
+    `<span class="f">&forall;x &exist;y &forall;z (z = x + y)</span>`,
+    `<span class="f">&forall;x &forall;y (xy = yx &rarr; x = y)</span>`],
+ a:0,
+ s:`<b>True:</b> for any x and y just take <span class="f">z = x + y</span> &mdash; z is chosen last, so it may depend on both.<br>
+    <b>False:</b> one fixed z cannot equal every possible sum.<br>
+    <b>False:</b> the innermost <span class="f">&forall;z</span> demands every integer equal a single value <span class="f">x + y</span>.<br>
+    <b>False:</b> multiplication always commutes, so the hypothesis is always true and the statement collapses to <span class="f">&forall;x &forall;y (x = y)</span>.`},
+
+{t:"pred",type:"mc",hard:false,
+ q:`From <span class="f">p &rarr; q</span>, <span class="f">r &rarr; s</span> and <span class="f">p &or; r</span> we conclude <span class="f">q &or; s</span>. Which rule is this?`,
+ c:[`Constructive dilemma`,`Hypothetical syllogism`,`Resolution`,`Modus ponens applied twice`],
+ a:0,
+ s:`<b>Constructive dilemma:</b> <span class="f">(p &rarr; q) &and; (r &rarr; s) &and; (p &or; r) &rArr; q &or; s</span> &mdash; two conditionals plus a disjunction of their hypotheses.<br>
+    Hypothetical syllogism chains two conditionals into one. Resolution cancels complementary literals in two clauses.<br>
+    Modus ponens cannot be applied at all here: we never learn which of <span class="f">p</span>, <span class="f">r</span> actually holds.`},
+
+{t:"set",type:"int",hard:true,
+ q:`In a universe with <span class="f">|U| = 10</span>, let <span class="f">|A| = 8</span>, <span class="f">|B| = 7</span>, <span class="f">|C| = 6</span>.<br>
+    What is the <b>smallest possible</b> value of <span class="f">|A &cap; B &cap; C|</span>?`,
+ a:1,
+ s:`Work with complements: <span class="f">|A&prime;| = 2</span>, <span class="f">|B&prime;| = 3</span>, <span class="f">|C&prime;| = 4</span>.<br>
+    An element is outside <span class="f">A &cap; B &cap; C</span> exactly when it lies in at least one complement, so
+    <span class="f">|(A &cap; B &cap; C)&prime;| &le; 2 + 3 + 4 = 9</span>.<br>
+    Hence <span class="f">|A &cap; B &cap; C| &ge; 10 &minus; 9 = 1</span>.<br>
+    The bound is achieved when the three complements are pairwise disjoint &rArr; <b>1</b>.`},
+
+{t:"set",type:"mc",hard:false,
+ q:`Which statement is <b>not</b> equivalent to <span class="f">A &sube; B</span>?`,
+ c:[`<span class="f">B &minus; A = &empty;</span>`,
+    `<span class="f">A &cup; B = B</span>`,
+    `<span class="f">A &cap; B = A</span>`,
+    `<span class="f">A &minus; B = &empty;</span>`],
+ a:0,
+ s:`<span class="f">B &minus; A = &empty;</span> says every element of B lies in A, i.e. <span class="f">B &sube; A</span> &mdash; the reverse containment.<br>
+    The other three are all standard restatements of <span class="f">A &sube; B</span>: absorbing A into B under union, A being unchanged by intersecting with B,
+    and A having nothing outside B.`},
+
+{t:"set",type:"int",hard:true,
+ q:`Let <span class="f">|A| = 4</span>. How many ordered pairs <span class="f">(X, Y)</span> satisfy <span class="f">X &sube; Y &sube; A</span>?`,
+ a:81,
+ s:`Decide the fate of each element of A independently. For a given element there are exactly three possibilities:<br>
+    in neither X nor Y &middot; in Y but not X &middot; in both.<br>
+    (&ldquo;in X but not Y&rdquo; is forbidden by <span class="f">X &sube; Y</span>.)<br>
+    So the count is <span class="f">3&#8308; = 81</span>. In general the answer is <span class="f">3&#8319;</span> for <span class="f">|A| = n</span>.`},
+
+{t:"func",type:"int",hard:false,
+ q:`Let <span class="f">|A| = 3</span> and <span class="f">|B| = 5</span>. How many <b>one-to-one</b> functions <span class="f">f : A &rarr; B</span> are there?`,
+ a:60,
+ s:`Assign images one element at a time, never repeating a target:<br>
+    5 choices, then 4, then 3 &rArr; <span class="f">5 &times; 4 &times; 3 = 60</span>.<br>
+    This is the falling factorial <span class="f">P(5,3) = 5! / 2!</span>. (With <span class="f">|A| &gt; |B|</span> the count would be 0, by the pigeonhole principle.)`},
+
+{t:"func",type:"mc",hard:false,
+ q:`Let <span class="f">f : &#8477; &rarr; &#8477;</span> be given by <span class="f">f(x) = (2x &minus; 1) / 3</span>. What is <span class="f">f&#8315;&sup1;(x)</span>?`,
+ c:[`<span class="f">(3x + 1) / 2</span>`,
+    `<span class="f">3 / (2x &minus; 1)</span>`,
+    `<span class="f">(3x &minus; 1) / 2</span>`,
+    `<span class="f">(2x + 1) / 3</span>`],
+ a:0,
+ s:`Set <span class="f">y = (2x &minus; 1)/3</span> and solve for x: <span class="f">3y = 2x &minus; 1 &rArr; x = (3y + 1)/2</span>.<br>
+    Swapping names gives <span class="f">f&#8315;&sup1;(x) = (3x + 1)/2</span>.<br>
+    Check: <span class="f">f(f&#8315;&sup1;(x)) = (2&middot;(3x+1)/2 &minus; 1)/3 = (3x + 1 &minus; 1)/3 = x</span> ✓.<br>
+    Option 2 confuses the inverse function with the reciprocal <span class="f">1/f(x)</span>.`},
+
+{t:"rel",type:"int",hard:false,
+ q:`How many relations on a set of 3 elements are <b>both reflexive and symmetric</b>?`,
+ a:8,
+ s:`Reflexivity fixes all 3 diagonal pairs as present &mdash; no freedom.<br>
+    Symmetry ties each off-diagonal pair <span class="f">(a,b)</span> to its mirror <span class="f">(b,a)</span>, so the <span class="f">C(3,2) = 3</span> unordered pairs are decided together, in or out.<br>
+    <span class="f">2&sup3; = 8</span>.`},
+
+{t:"rel",type:"int",hard:true,
+ q:`On the set <span class="f">P({1,2})</span> (all four subsets of <span class="f">{1,2}</span>), let <span class="f">X R Y</span> mean <span class="f">X &sube; Y</span>.<br>
+    How many ordered pairs does R contain?`,
+ a:9,
+ s:`The four subsets are <span class="f">&empty;, {1}, {2}, {1,2}</span>. Count the pairs <span class="f">(X,Y)</span> with <span class="f">X &sube; Y</span>:<br>
+    from <span class="f">&empty;</span>: 4 (it is a subset of everything) &middot;
+    from <span class="f">{1}</span>: 2 (itself and <span class="f">{1,2}</span>) &middot;
+    from <span class="f">{2}</span>: 2 &middot; from <span class="f">{1,2}</span>: 1.<br>
+    <span class="f">4 + 2 + 2 + 1 = 9</span>. (R is a partial order &mdash; and not total, since <span class="f">{1}</span> and <span class="f">{2}</span> are incomparable.)`},
+
+{t:"proof",type:"int",hard:false,
+ q:`Induction gives <span class="f">1&middot;2 + 2&middot;3 + &hellip; + n(n+1) = n(n+1)(n+2)/3</span>.<br>
+    Evaluate the sum for <span class="f">n = 6</span>.`,
+ a:112,
+ s:`<span class="f">6 &middot; 7 &middot; 8 / 3 = 336 / 3 = 112</span>.<br>
+    Direct check: <span class="f">2 + 6 + 12 + 20 + 30 + 42 = 112</span> ✓.<br>
+    The inductive step works because <span class="f">n(n+1)(n+2)/3 + (n+1)(n+2) = (n+1)(n+2)(n+3)/3</span>.`},
+
+{t:"proof",type:"mc",hard:true,
+ q:`What is the most efficient way to prove that <span class="f">p&#8321;</span>, <span class="f">p&#8322;</span> and <span class="f">p&#8323;</span> are all equivalent?`,
+ c:[`Prove the cycle <span class="f">p&#8321; &rarr; p&#8322;</span>, <span class="f">p&#8322; &rarr; p&#8323;</span>, <span class="f">p&#8323; &rarr; p&#8321;</span>`,
+    `Prove all six implications between the pairs`,
+    `Prove <span class="f">p&#8321; &rarr; p&#8322;</span> and <span class="f">p&#8322; &rarr; p&#8323;</span> only`,
+    `Prove <span class="f">p&#8321; &harr; p&#8322;</span> and note that equivalence is transitive, so nothing about <span class="f">p&#8323;</span> is needed`],
+ a:0,
+ s:`A cycle of implications makes every one reachable from every other by chaining, so <b>3</b> proofs suffice instead of 6.<br>
+    E.g. <span class="f">p&#8322; &rarr; p&#8321;</span> comes free from <span class="f">p&#8322; &rarr; p&#8323; &rarr; p&#8321;</span>.<br>
+    Two implications alone are not enough &mdash; nothing yet leads back from <span class="f">p&#8323;</span>. And the last option simply ignores <span class="f">p&#8323;</span>.`}
+];
+
+/* ============================================================
+   STATE + HELPERS
+   ============================================================ */
+const $  = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const KEYS = ["a","b","c","d"];
+let picked = new Set(Object.keys(TOPICS));
+let nWanted = 20, minutes = 60;
+let S = null;
+let tick = null;
+let revFilter = "all";
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
+/* ============================================================
+   Formula engine for 'expr' items.
+   A typed answer is graded by comparing full truth tables, so any
+   logically equivalent formula counts as correct.
+   Precedence: ¬  >  ∧  >  ∨  >  ⊕  >  →  (right assoc)  >  ↔
+   ============================================================ */
+function normalizeFormula(src){
+  return String(src).toLowerCase()
+    .replace(/<->|<=>|≡/g,"↔")
+    .replace(/->|=>|⊃/g,"→")
+    .replace(/xor/g,"⊕")
+    .replace(/[~!]/g,"¬")
+    .replace(/&&|&|\^|\./g,"∧")
+    .replace(/\|\||\||\+/g,"∨")
+    .replace(/\s+/g,"");
+}
+function parseFormula(src){
+  const s = normalizeFormula(src);
+  if(!s) throw new Error("empty formula");
+  let i = 0;
+  function unary(){
+    const c = s[i];
+    if(c === undefined) throw new Error("formula ends too early");
+    if(c === "¬"){ i++; return {op:"¬", a:unary()}; }
+    if(c === "("){ i++; const e = biimp(); if(s[i] !== ")") throw new Error("missing ')'"); i++; return e; }
+    if(/[a-z]/.test(c)){ i++; return {op:"var", name:c}; }
+    throw new Error(`unexpected "${c}"`);
+  }
+  function level(next, ops){
+    let left = next();
+    while(ops.includes(s[i])){ const op = s[i]; i++; left = {op, a:left, b:next()}; }
+    return left;
+  }
+  const and = () => level(unary, ["∧"]);
+  const or  = () => level(and,   ["∨"]);
+  const xor = () => level(or,    ["⊕"]);
+  function imp(){ const l = xor(); if(s[i] === "→"){ i++; return {op:"→", a:l, b:imp()}; } return l; }
+  function biimp(){ return level(imp, ["↔"]); }
+  const ast = biimp();
+  if(i < s.length) throw new Error(`unexpected "${s[i]}"`);
+  return ast;
+}
+function varsOf(n, out){
+  out = out || new Set();
+  if(n.op === "var") out.add(n.name);
+  else { if(n.a) varsOf(n.a, out); if(n.b) varsOf(n.b, out); }
+  return out;
+}
+function evalAst(n, env){
+  switch(n.op){
+    case "var": return !!env[n.name];
+    case "¬": return !evalAst(n.a, env);
+    case "∧": return evalAst(n.a, env) && evalAst(n.b, env);
+    case "∨": return evalAst(n.a, env) || evalAst(n.b, env);
+    case "⊕": return evalAst(n.a, env) !== evalAst(n.b, env);
+    case "→": return !evalAst(n.a, env) || evalAst(n.b, env);
+    case "↔": return evalAst(n.a, env) === evalAst(n.b, env);
+  }
+  throw new Error("bad node");
+}
+function equivalent(userSrc, keySrc){
+  const A = parseFormula(userSrc), B = parseFormula(keySrc);
+  const vs = Array.from(new Set([...varsOf(A), ...varsOf(B)])).sort();
+  for(let m = 0; m < (1 << vs.length); m++){
+    const env = {};
+    vs.forEach((v,j) => env[v] = !!(m & (1 << j)));
+    if(evalAst(A, env) !== evalAst(B, env)) return false;
+  }
+  return true;
+}
+
+/* ---------- setup screen ---------- */
+function paintTopics(){
+  $("#topics").innerHTML = Object.entries(TOPICS).map(([k,label])=>{
+    const n = BANK.filter(q=>q.t===k).length;
+    return `<button class="chip" data-t="${k}" aria-pressed="${picked.has(k)}">${label} <span class="n">${n}</span></button>`;
+  }).join("");
+}
+function pool(){ return BANK.filter(q=>picked.has(q.t)); }
+function paintStartNote(){
+  const n = pool().length;
+  const take = nWanted === 0 ? n : Math.min(nWanted, n);
+  $("#startNote").textContent = n === 0 ? "Select at least one topic." : `Drawing ${take} questions from a pool of ${n}.`;
+  $("#go").disabled = n === 0;
+  $("#go").style.opacity = n === 0 ? .45 : 1;
+}
+paintTopics(); paintStartNote();
+
+$("#topics").addEventListener("click", e=>{
+  const b = e.target.closest(".chip"); if(!b) return;
+  const t = b.dataset.t;
+  picked.has(t) ? picked.delete(t) : picked.add(t);
+  if(picked.size === 0) picked.add(t);
+  paintTopics(); paintStartNote();
+});
+function segHandler(sel, attr, fn){
+  $(sel).addEventListener("click", e=>{
+    const b = e.target.closest("button"); if(!b) return;
+    $$(sel+" button").forEach(x=>x.setAttribute("aria-pressed", x===b));
+    fn(Number(b.dataset[attr]));
+  });
+}
+segHandler("#count","n", v=>{ nWanted=v; paintStartNote(); });
+segHandler("#time","m",  v=>{ minutes=v; });
+
+/* ---------- build & run ---------- */
+function buildSession(list){
+  const qs = list || shuffle(pool()).slice(0, nWanted === 0 ? undefined : nWanted);
+  S = {
+    items: qs.map(q=>{
+      const order = q.type === "mc" ? shuffle(q.c.map((_,i)=>i)) : null;
+      return { q, order, correct: order ? order.indexOf(q.a) : q.a, pick:null, flag:false };
+    }),
+    i: 0,
+    ends: minutes ? Date.now() + minutes*60000 : null,
+    started: Date.now(),
+    done: false
+  };
+}
+function start(list){
+  buildSession(list);
+  $("#setup").hidden = true; $("#result").hidden = true; $("#exam").hidden = false;
+  $("#quit").hidden = false;
+  $("#clock").hidden = !S.ends;
+  buildSheet(); render();
+  if(tick) clearInterval(tick);
+  if(S.ends){ paintClock(); tick = setInterval(paintClock, 1000); }
+  window.scrollTo(0,0);
+}
+function paintClock(){
+  const left = Math.max(0, S.ends - Date.now());
+  const m = Math.floor(left/60000), s = Math.floor(left%60000/1000);
+  const c = $("#clock");
+  c.textContent = `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+  c.classList.toggle("warn", left < 5*60000);
+  if(left === 0){ clearInterval(tick); finish(true); }
+}
+
+/* ---------- question rendering ---------- */
+function render(){
+  const it = S.items[S.i], q = it.q;
+  $("#idx").textContent = `Question ${S.i+1} of ${S.items.length}`;
+  $("#barfill").style.width = ((S.i+1)/S.items.length*100) + "%";
+
+  let body = `<div class="tagrow">
+      <span class="tag">${TOPICS[q.t]}</span>
+      ${q.hard ? `<span class="tag hard">challenge</span>` : ``}
+      <button class="flagbtn" id="flag" aria-pressed="${it.flag}">${it.flag ? "★ Flagged" : "☆ Flag"}</button>
+    </div>
+    <p class="stem">${q.q}</p>`;
+
+  if(q.given) body += `<div class="given">${q.given}</div>`;
+  if(q.steps && q.type !== "audit") body += `<ol class="steps">${q.steps.map(s=>`<li><span>${s[0]}</span><span class="just">${s[1]}</span></li>`).join("")}</ol>`;
+  if(q.fig)   body += q.fig;
+
+  if(q.type === "mc"){
+    body += `<div class="opts" id="opts">` + it.order.map((oi,pos)=>
+      `<button class="opt" data-pos="${pos}" aria-pressed="${it.pick===pos}"><span class="k">${KEYS[pos]}</span><span>${q.c[oi]}</span></button>`
+    ).join("") + `</div>`;
+  }else if(q.type === "audit"){
+    body += `<div class="auditlist" id="auditlist">` + q.steps.map((s,i)=>
+        `<button class="arow" data-n="${i+1}" aria-pressed="false"><span>${s[0]}</span><span class="just">${s[1]}</span></button>`
+      ).join("") + `</div><div class="auditmsg" id="auditmsg"></div>`;
+  }else if(q.type === "expr"){
+    body += `<div class="expr">
+        <input type="text" id="exprin" class="exprin" spellcheck="false" autocomplete="off"
+               placeholder="(p ∧ q) → r" value="${esc(it.pick ?? "")}" aria-label="Logical formula">
+        <div class="pad" id="pad">
+          ${q.vars.map(v=>`<button class="var" data-ins="${v}">${v}</button>`).join("")}
+          ${["¬","∧","∨","→","↔","⊕","(",")"].map(t=>`<button data-ins="${t}">${t}</button>`).join("")}
+          <button class="util" data-act="back">⌫</button>
+          <button class="util" data-act="clear">clear</button>
+        </div>
+        <div class="exprmsg" id="exprmsg"></div>
+        <div class="exprhint">Type it or tap the keys. ASCII also works:
+          <span class="f">~ &amp; | ^ -&gt; &lt;-&gt; xor</span>. Any logically equivalent formula is accepted.</div>
+      </div>`;
+  }else{
+    body += `<div class="intbox">
+        <input type="text" inputmode="numeric" id="intin" placeholder="—" value="${it.pick ?? ""}" aria-label="Integer answer">
+        <span class="hint">Whole number only (negatives allowed)</span>
+      </div>`;
+  }
+  $("#card").innerHTML = body;
+
+  $("#flag").onclick = () => { it.flag = !it.flag; render(); syncSheet(); };
+  if(q.type === "mc"){
+    $("#opts").onclick = e => {
+      const b = e.target.closest(".opt"); if(!b) return;
+      it.pick = Number(b.dataset.pos); render(); syncSheet();
+    };
+  }else if(q.type === "expr"){
+    const el = $("#exprin"), msg = $("#exprmsg");
+    const check = () => {
+      it.pick = el.value.trim() === "" ? null : el.value;
+      if(it.pick === null){ msg.textContent = ""; msg.className = "exprmsg"; }
+      else{
+        try{ parseFormula(it.pick); msg.textContent = "✓ well-formed"; msg.className = "exprmsg ok"; }
+        catch(err){ msg.textContent = "✗ " + err.message; msg.className = "exprmsg bad"; }
+      }
+      syncSheet();
+    };
+    el.oninput = check;
+    $("#pad").onclick = e => {
+      const b = e.target.closest("button"); if(!b) return;
+      if(b.dataset.act === "clear") el.value = "";
+      else if(b.dataset.act === "back") el.value = el.value.slice(0,-1);
+      else{
+        const st = el.selectionStart ?? el.value.length, en = el.selectionEnd ?? el.value.length;
+        el.value = el.value.slice(0,st) + b.dataset.ins + el.value.slice(en);
+        const at = st + b.dataset.ins.length;
+        el.setSelectionRange(at, at);
+      }
+      el.focus(); check();
+    };
+    check();
+  }else{
+    const el = $("#intin");
+    el.oninput = () => {
+      el.value = el.value.replace(/[^\d-]/g,"").replace(/(?!^)-/g,"");
+      it.pick = el.value === "" || el.value === "-" ? null : el.value;
+      syncSheet();
+    };
+  }
+  $("#prev").disabled = S.i === 0;
+  $("#next").disabled = S.i === S.items.length - 1;
+  [$("#prev"),$("#next")].forEach(b=>b.style.opacity = b.disabled ? .4 : 1);
+  syncSheet();
+}
+
+/* ---------- answer sheet ---------- */
+function buildSheet(){
+  $("#sheetBody").innerHTML = S.items.map((it,i)=>{
+    const cells = it.q.type === "mc"
+      ? `<span class="bubs">${KEYS.map((k,p)=>`<span class="bub" data-p="${p}">${k}</span>`).join("")}</span>`
+      : `<span class="sbox">${it.q.type === "expr" ? "f(x)" : "int"}</span>`;
+    return `<button class="srow" data-i="${i}"><span class="n">${i+1}</span>${cells}</button>`;
+  }).join("");
+  $("#sheetBody").onclick = e => {
+    const r = e.target.closest(".srow"); if(!r) return;
+    S.i = Number(r.dataset.i); render(); window.scrollTo({top:0,behavior:"smooth"});
+  };
+}
+function syncSheet(){
+  let done = 0, flags = 0;
+  $$("#sheetBody .srow").forEach((row,i)=>{
+    const it = S.items[i];
+    row.classList.toggle("cur", i === S.i);
+    row.classList.toggle("flagged", it.flag);
+    if(it.q.type === "mc"){
+      row.querySelectorAll(".bub").forEach((b,p)=>b.classList.toggle("on", it.pick === p));
+    }else{
+      const box = row.querySelector(".sbox");
+      const empty = it.q.type === "expr" ? "f(x)" : "int";
+      const shown = String(it.pick ?? "");
+      box.textContent = it.pick === null ? empty : (shown.length > 10 ? shown.slice(0,9)+"…" : shown);
+      box.classList.toggle("on", it.pick !== null);
+    }
+    if(it.pick !== null) done++;
+    if(it.flag) flags++;
+  });
+  $("#tallyDone").textContent = `${done} / ${S.items.length}`;
+  $("#tallyFlag").textContent = flags;
+}
+
+/* ---------- navigation ---------- */
+$("#prev").onclick = () => { if(S.i > 0){ S.i--; render(); } };
+$("#next").onclick = () => { if(S.i < S.items.length-1){ S.i++; render(); } };
+$("#clear").onclick = () => { S.items[S.i].pick = null; render(); };
+$("#go").onclick = () => start();
+$("#quit").onclick = () => {
+  if(!S || S.done || confirm("Leave the exam without handing in?")){
+    if(tick) clearInterval(tick);
+    $("#exam").hidden = true; $("#result").hidden = true; $("#setup").hidden = false;
+    $("#clock").hidden = true; $("#quit").hidden = true;
+  }
+};
+document.addEventListener("keydown", e=>{
+  if($("#exam").hidden) return;
+  if(e.target.tagName === "INPUT") { if(e.key==="Enter") $("#next").click(); return; }
+  const it = S.items[S.i];
+  if(e.key === "ArrowLeft")  $("#prev").click();
+  if(e.key === "ArrowRight" || e.key === "Enter") $("#next").click();
+  if(e.key.toLowerCase() === "f"){ it.flag = !it.flag; render(); }
+  if(it.q.type === "mc" && ["1","2","3","4"].includes(e.key)){
+    it.pick = Number(e.key)-1; render();
+  }
+});
+
+/* ---------- grading ---------- */
+$("#submit").onclick = () => {
+  const blank = S.items.filter(x=>x.pick === null).length;
+  if(blank && !confirm(`${blank} question${blank>1?"s":""} left unanswered. Hand in anyway?`)) return;
+  finish(false);
+};
+function isRight(it){
+  if(it.pick === null) return false;
+  if(it.q.type === "mc")  return it.pick === it.correct;
+  if(it.q.type === "int") return parseInt(it.pick,10) === it.q.a;
+  try{ return equivalent(it.pick, it.q.a); }catch(err){ return false; }
+}
+function finish(auto){
+  S.done = true;
+  if(tick) clearInterval(tick);
+  const n = S.items.length;
+  const score = S.items.filter(isRight).length;
+  const pct = Math.round(score/n*100);
+  const mins = Math.round((Date.now() - S.started)/60000);
+
+  $("#score").innerHTML = `${score}<span>/${n}</span>`;
+  const verdict = pct >= 85 ? "Exam-ready."
+                : pct >= 70 ? "Solid foundation — tighten the details."
+                : pct >= 50 ? "On the right track, but several areas need another pass."
+                : "Go back to the definitions and core rules first.";
+  $("#verdict").textContent = verdict;
+  $("#resMeta").innerHTML = `${pct}% &middot; ${mins} min elapsed &middot; ${S.items.filter(x=>x.pick===null).length} left blank`
+    + (auto ? ` &middot; <b>time expired — handed in automatically</b>` : ``);
+
+  const by = {};
+  S.items.forEach(it=>{
+    const k = it.q.t;
+    by[k] = by[k] || {n:0, ok:0};
+    by[k].n++; if(isRight(it)) by[k].ok++;
+  });
+  $("#bars").innerHTML = Object.keys(TOPICS).filter(k=>by[k]).map(k=>{
+    const {n:tn, ok} = by[k], p = Math.round(ok/tn*100);
+    const cls = p >= 80 ? "high" : p < 50 ? "low" : "";
+    return `<div class="brow"><span>${TOPICS[k]}</span>
+      <span class="btrack"><i class="${cls}" style="width:${p}%"></i></span>
+      <span class="bnum">${ok}/${tn}</span></div>`;
+  }).join("");
+
+  paintReview();
+  $("#exam").hidden = true; $("#result").hidden = false; $("#clock").hidden = true;
+  window.scrollTo(0,0);
+}
+
+function paintReview(){
+  $("#rev").innerHTML = S.items.map((it,i)=>{
+    const q = it.q, ok = isRight(it), blank = it.pick === null;
+    if(revFilter === "wrong" && (ok || blank)) return "";
+    if(revFilter === "blank" && !blank) return "";
+    const state = ok ? "right" : blank ? "blank" : "wrong";
+    const label = ok ? "correct" : blank ? "blank" : "wrong";
+
+    let ansBlock;
+    if(q.type === "mc"){
+      ansBlock = `<ul class="ropts">` + it.order.map((oi,pos)=>{
+        const key = pos === it.correct, pick = pos === it.pick && !key;
+        return `<li class="${key?"key":pick?"pick":""}"><span class="k">${KEYS[pos]}</span><span>${q.c[oi]}</span>
+          <span class="who">${key?"key":pick?"your answer":""}</span></li>`;
+      }).join("") + `</ul>`;
+    }else if(q.type === "expr"){
+      let note = "your answer";
+      if(ok) note = "equivalent ✓";
+      else if(!blank){ try{ parseFormula(it.pick); }catch(err){ note = "not well-formed"; } }
+      ansBlock = `<ul class="ropts">
+        <li class="key"><span class="k">✓</span><span class="f">${esc(q.a)}</span><span class="who">key (or any equivalent)</span></li>
+        <li class="${ok?"":"pick"}"><span class="k">&nbsp;</span><span class="f">${blank ? "— no answer —" : esc(it.pick)}</span><span class="who">${note}</span></li>
+      </ul>`;
+    }else{
+      ansBlock = `<ul class="ropts">
+        <li class="key"><span class="k">✓</span><span class="f">${q.a}</span><span class="who">key</span></li>
+        <li class="${ok?"":"pick"}"><span class="k">&nbsp;</span><span class="f">${blank ? "— no answer —" : it.pick}</span><span class="who">${ok?"":"your answer"}</span></li>
+      </ul>`;
+    }
+
+    return `<article class="rcard ${state}">
+      <div class="rhead"><span class="rno">Q${i+1}</span><span class="tag">${TOPICS[q.t]}</span>
+        <span class="mark ${state}">${label}</span></div>
+      <p class="stem" style="font-size:16px">${q.q}</p>
+      ${q.given ? `<div class="given">${q.given}</div>` : ``}
+      ${q.steps ? `<ol class="steps">${q.steps.map(s=>`<li><span>${s[0]}</span><span class="just">${s[1]}</span></li>`).join("")}</ol>` : ``}
+      ${q.fig || ``}
+      ${ansBlock}
+      <div class="sol"><span class="lbl">Solution</span>${q.s}</div>
+    </article>`;
+  }).join("") || `<div class="note">No questions in this filter.</div>`;
+}
+$("#filters").onclick = e => {
+  const b = e.target.closest(".chip"); if(!b) return;
+  revFilter = b.dataset.f;
+  $$("#filters .chip").forEach(x=>x.setAttribute("aria-pressed", x===b));
+  paintReview();
+};
+$("#again").onclick = () => {
+  $("#result").hidden = true; $("#setup").hidden = false; $("#quit").hidden = true;
+  window.scrollTo(0,0);
+};
+$("#retryWrong").onclick = () => {
+  const wrong = S.items.filter(it=>!isRight(it)).map(it=>it.q);
+  if(!wrong.length){ alert("Everything was correct — nothing to retry."); return; }
+  start(shuffle(wrong));
+};
+</script>
